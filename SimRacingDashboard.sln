@@ -3,19 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimRacingDashboard.Entities", "RaspberryDashboard.Entities\SimRacingDashboard.Entities.csproj", "{119BB8AF-8E1A-4CD5-BC05-1F19CAE45452}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimRacingDashboard.Entities", "SimRacingDashboard.Entities\SimRacingDashboard.Entities.csproj", "{119BB8AF-8E1A-4CD5-BC05-1F19CAE45452}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimRacingDashboard.DataAccess.PCars", "RaspberryDashboard.DataAccess.PCars\SimRacingDashboard.DataAccess.PCars.csproj", "{9D15C050-5A6B-4CF7-9C9C-2CDADA4DF509}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimRacingDashboard.DataAccess.PCars", "SimRacingDashboard.DataAccess.PCars\SimRacingDashboard.DataAccess.PCars.csproj", "{9D15C050-5A6B-4CF7-9C9C-2CDADA4DF509}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimRacingDashboard.DataAccess.DirtRally", "RaspberryDashboard.DataAccess.DirtRally\SimRacingDashboard.DataAccess.DirtRally.csproj", "{DF572FF5-1CB8-4BF4-9B88-A52C28673302}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimRacingDashboard.DataAccess.DirtRally", "SimRacingDashboard.DataAccess.DirtRally\SimRacingDashboard.DataAccess.DirtRally.csproj", "{DF572FF5-1CB8-4BF4-9B88-A52C28673302}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimRacingDashboard.DataAccess", "RaspberryDashboard.DataAccess\SimRacingDashboard.DataAccess.csproj", "{9C369ECB-309F-497F-9756-0EA67026AD3F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimRacingDashboard.DataAccess", "SimRacingDashboard.DataAccess\SimRacingDashboard.DataAccess.csproj", "{9C369ECB-309F-497F-9756-0EA67026AD3F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimRacingDashboard", "RaspberryDashboard\SimRacingDashboard.csproj", "{D849CB3C-60C9-47C4-B54A-590535E0661F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimRacingDashboard", "SimRacingDashboard\SimRacingDashboard.csproj", "{D849CB3C-60C9-47C4-B54A-590535E0661F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimRacingDashboard.Output.Console", "RaspberryDashboard.Output.Console\SimRacingDashboard.Output.Console.csproj", "{67A0556E-00FF-47A0-8456-3900E4EBC323}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimRacingDashboard.Output.Console", "SimRacingDashboard.Output.Console\SimRacingDashboard.Output.Console.csproj", "{67A0556E-00FF-47A0-8456-3900E4EBC323}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimRacingDashboard.Output", "RaspberryDashboard.Output\SimRacingDashboard.Output.csproj", "{72A3FBE6-D192-45D4-BAE1-161F19FBC236}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimRacingDashboard.Output", "SimRacingDashboard.Output\SimRacingDashboard.Output.csproj", "{72A3FBE6-D192-45D4-BAE1-161F19FBC236}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -3,10 +3,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9D15C050-5A6B-4CF7-9C9C-2CDADA4DF509}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>RaspberryDashboard.DataAccess.PCars</RootNamespace>
-    <AssemblyName>RaspberryDashboard.DataAccess.PCars</AssemblyName>
+    <ProjectGuid>{D849CB3C-60C9-47C4-B54A-590535E0661F}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>SimRacingDashboard</RootNamespace>
+    <AssemblyName>SimRacingDashboard</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -17,7 +17,7 @@
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
+    <Externalconsole>true</Externalconsole>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -25,31 +25,40 @@
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
+    <Externalconsole>true</Externalconsole>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CarFlags.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Gateways\CarStateGateway.cs" />
-    <Compile Include="UdpReader.cs" />
-    <Compile Include="PacketParser.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\RaspberryDashboard.DataAccess\SimRacingDashboard.DataAccess.csproj">
+    <ProjectReference Include="..\SimRacingDashboard.DataAccess.DirtRally\SimRacingDashboard.DataAccess.DirtRally.csproj">
+      <Project>{DF572FF5-1CB8-4BF4-9B88-A52C28673302}</Project>
+      <Name>SimRacingDashboard.DataAccess.DirtRally</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SimRacingDashboard.DataAccess.PCars\SimRacingDashboard.DataAccess.PCars.csproj">
+      <Project>{9D15C050-5A6B-4CF7-9C9C-2CDADA4DF509}</Project>
+      <Name>SimRacingDashboard.DataAccess.PCars</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SimRacingDashboard.DataAccess\SimRacingDashboard.DataAccess.csproj">
       <Project>{9C369ECB-309F-497F-9756-0EA67026AD3F}</Project>
       <Name>SimRacingDashboard.DataAccess</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RaspberryDashboard.Entities\SimRacingDashboard.Entities.csproj">
+    <ProjectReference Include="..\SimRacingDashboard.Entities\SimRacingDashboard.Entities.csproj">
       <Project>{119BB8AF-8E1A-4CD5-BC05-1F19CAE45452}</Project>
       <Name>SimRacingDashboard.Entities</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <Content Include="structure.txt" />
+    <ProjectReference Include="..\SimRacingDashboard.Output.Console\SimRacingDashboard.Output.Console.csproj">
+      <Project>{67A0556E-00FF-47A0-8456-3900E4EBC323}</Project>
+      <Name>SimRacingDashboard.Output.Console</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SimRacingDashboard.Output\SimRacingDashboard.Output.csproj">
+      <Project>{72A3FBE6-D192-45D4-BAE1-161F19FBC236}</Project>
+      <Name>SimRacingDashboard.Output</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
