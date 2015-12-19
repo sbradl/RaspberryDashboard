@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D849CB3C-60C9-47C4-B54A-590535E0661F}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>RaspberryDashboard</RootNamespace>
+    <AssemblyName>RaspberryDashboard</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Externalconsole>true</Externalconsole>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Externalconsole>true</Externalconsole>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\RaspberryDashboard.DataAccess.DirtRally\RaspberryDashboard.DataAccess.DirtRally.csproj">
+      <Project>{DF572FF5-1CB8-4BF4-9B88-A52C28673302}</Project>
+      <Name>RaspberryDashboard.DataAccess.DirtRally</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RaspberryDashboard.DataAccess.PCars\RaspberryDashboard.DataAccess.PCars.csproj">
+      <Project>{9D15C050-5A6B-4CF7-9C9C-2CDADA4DF509}</Project>
+      <Name>RaspberryDashboard.DataAccess.PCars</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RaspberryDashboard.DataAccess\RaspberryDashboard.DataAccess.csproj">
+      <Project>{9C369ECB-309F-497F-9756-0EA67026AD3F}</Project>
+      <Name>RaspberryDashboard.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RaspberryDashboard.Entities\RaspberryDashboard.Entities.csproj">
+      <Project>{119BB8AF-8E1A-4CD5-BC05-1F19CAE45452}</Project>
+      <Name>RaspberryDashboard.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RaspberryDashboard.Output.Console\RaspberryDashboard.Output.Console.csproj">
+      <Project>{67A0556E-00FF-47A0-8456-3900E4EBC323}</Project>
+      <Name>RaspberryDashboard.Output.Console</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RaspberryDashboard.Output\RaspberryDashboard.Output.csproj">
+      <Project>{72A3FBE6-D192-45D4-BAE1-161F19FBC236}</Project>
+      <Name>RaspberryDashboard.Output</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

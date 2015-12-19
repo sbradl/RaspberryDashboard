@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DF572FF5-1CB8-4BF4-9B88-A52C28673302}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>RaspberryDashboard.DataAccess.DirtRally</RootNamespace>
+    <AssemblyName>RaspberryDashboard.DataAccess.DirtRally</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\RaspberryDashboard.DataAccess\RaspberryDashboard.DataAccess.csproj">
+      <Project>{9C369ECB-309F-497F-9756-0EA67026AD3F}</Project>
+      <Name>RaspberryDashboard.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RaspberryDashboard.Entities\RaspberryDashboard.Entities.csproj">
+      <Project>{119BB8AF-8E1A-4CD5-BC05-1F19CAE45452}</Project>
+      <Name>RaspberryDashboard.Entities</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>
