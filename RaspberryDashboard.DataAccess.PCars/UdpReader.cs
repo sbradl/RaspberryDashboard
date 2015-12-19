@@ -2,7 +2,7 @@
 using System.Net.Sockets;
 using System.Net;
 
-namespace RaspberryDashboard.DataAccess.PCars
+namespace SimRacingDashboard.DataAccess.PCars
 {
     public class UdpReader : IDisposable
     {

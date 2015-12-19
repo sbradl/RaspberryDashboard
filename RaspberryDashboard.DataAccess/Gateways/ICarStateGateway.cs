@@ -1,7 +1,7 @@
 ﻿using System;
-using RaspberryDashboard.Entities;
+using SimRacingDashboard.Entities;
 
-namespace RaspberryDashboard.DataAccess
+namespace SimRacingDashboard.DataAccess
 {
     public interface ICarStateGateway
     {

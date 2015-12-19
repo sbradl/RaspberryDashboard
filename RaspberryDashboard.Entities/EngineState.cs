@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RaspberryDashboard.Entities
+namespace SimRacingDashboard.Entities
 {
     public struct EngineState
     {
@@ -9,11 +9,19 @@ namespace RaspberryDashboard.Entities
         public ushort Rpm { get; set; }
         public ushort MaxRpm { get; set; }
 
-        public float Level
+        public float RpmLevel
         {
             get
             {
                 return this.Rpm / this.MaxRpm;
+            }
+        }
+
+        public bool Shift
+        {
+            get
+            {
+                return this.RpmLevel >= 0.9;
             }
         }
 

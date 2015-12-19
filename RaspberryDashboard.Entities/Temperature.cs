@@ -1,4 +1,4 @@
-﻿namespace RaspberryDashboard.Entities
+﻿namespace SimRacingDashboard.Entities
 {
     public struct Temperature
     {

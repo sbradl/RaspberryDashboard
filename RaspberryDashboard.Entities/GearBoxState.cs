@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace RaspberryDashboard.Entities
+namespace SimRacingDashboard.Entities
 {
     public struct GearBoxState
     {
+        public byte CurrentGear { get; set; }
         public byte NumGears { get; set; }
-
     }
 }
 

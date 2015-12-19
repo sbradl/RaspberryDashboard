@@ -1,11 +1,11 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace RaspberryDashboard.Output.Console
+namespace SimRacingDashboard.Output.Console
 {
     public class ConsoleVisualizer : ICarStateVisualizer
     {
-        public void Visualize(RaspberryDashboard.Entities.CarState carState)
+        public void Visualize(SimRacingDashboard.Entities.CarState carState)
         {
             var json = JsonConvert.SerializeObject(carState, Formatting.Indented);
 

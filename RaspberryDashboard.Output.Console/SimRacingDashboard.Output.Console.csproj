@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{72A3FBE6-D192-45D4-BAE1-161F19FBC236}</ProjectGuid>
+    <ProjectGuid>{67A0556E-00FF-47A0-8456-3900E4EBC323}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>RaspberryDashboard.Output</RootNamespace>
-    <AssemblyName>RaspberryDashboard.Output</AssemblyName>
+    <RootNamespace>RaspberryDashboard.Output.Console</RootNamespace>
+    <AssemblyName>RaspberryDashboard.Output.Console</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -29,16 +29,26 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ICarStateVisualizer.cs" />
+    <Compile Include="ConsoleVisualizer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\RaspberryDashboard.Entities\RaspberryDashboard.Entities.csproj">
-      <Project>{119BB8AF-8E1A-4CD5-BC05-1F19CAE45452}</Project>
-      <Name>RaspberryDashboard.Entities</Name>
+    <ProjectReference Include="..\RaspberryDashboard.Output\SimRacingDashboard.Output.csproj">
+      <Project>{72A3FBE6-D192-45D4-BAE1-161F19FBC236}</Project>
+      <Name>SimRacingDashboard.Output</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RaspberryDashboard.Entities\SimRacingDashboard.Entities.csproj">
+      <Project>{119BB8AF-8E1A-4CD5-BC05-1F19CAE45452}</Project>
+      <Name>SimRacingDashboard.Entities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

@@ -1,8 +1,8 @@
-﻿namespace RaspberryDashboard.Entities
+﻿namespace SimRacingDashboard.Entities
 {
     public struct FuelState
     {
-        public Pressure FuelPressure { get; set; }
+        public Pressure Pressure { get; set; }
 
         public uint CapacityInLiters { get; set; }
 

@@ -1,7 +1,7 @@
 ﻿using System;
-using RaspberryDashboard.Entities;
+using SimRacingDashboard.Entities;
 
-namespace RaspberryDashboard.Output
+namespace SimRacingDashboard.Output
 {
     public interface ICarStateVisualizer
     {

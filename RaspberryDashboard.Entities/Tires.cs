@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RaspberryDashboard.Entities
+namespace SimRacingDashboard.Entities
 {
     public struct Tires
     {

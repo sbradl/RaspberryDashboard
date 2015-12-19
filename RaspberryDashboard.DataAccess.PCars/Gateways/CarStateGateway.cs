@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading;
 
-namespace RaspberryDashboard.DataAccess.PCars
+namespace SimRacingDashboard.DataAccess.PCars
 {
     public class CarStateGateway : ICarStateGateway
     {
-        public event EventHandler<RaspberryDashboard.Entities.CarState> CarStateChanged;
+        public event EventHandler<SimRacingDashboard.Entities.CarState> CarStateChanged;
 
         private volatile bool isRunning = true;
 

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -36,12 +36,10 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\RaspberryDashboard.Entities\RaspberryDashboard.Entities.csproj">
+    <ProjectReference Include="..\RaspberryDashboard.Entities\SimRacingDashboard.Entities.csproj">
       <Project>{119BB8AF-8E1A-4CD5-BC05-1F19CAE45452}</Project>
-      <Name>RaspberryDashboard.Entities</Name>
+      <Name>SimRacingDashboard.Entities</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Gateways\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>

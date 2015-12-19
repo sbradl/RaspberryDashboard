@@ -1,9 +1,9 @@
 ﻿using System;
-using RaspberryDashboard.DataAccess;
-using RaspberryDashboard.Output;
-using RaspberryDashboard.Output.Console;
+using SimRacingDashboard.DataAccess;
+using SimRacingDashboard.Output;
+using SimRacingDashboard.Output.Console;
 
-namespace RaspberryDashboard
+namespace SimRacingDashboard
 {
     class MainClass
     {
@@ -14,7 +14,7 @@ namespace RaspberryDashboard
                 args = new [] { "PCars", "Console" };
             }
 
-            Console.WriteLine("Starting RaspberryDashboard");
+            Console.WriteLine("Starting {0}", System.AppDomain.CurrentDomain.FriendlyName);
 
             var backend = args[0];
             var frontend = args[1];
@@ -35,7 +35,7 @@ namespace RaspberryDashboard
         {
             if (backend == "PCars")
             {
-                return new RaspberryDashboard.DataAccess.PCars.CarStateGateway();
+                return new DataAccess.PCars.CarStateGateway();
             } 
 
             throw new ArgumentException("Invalid backend: " + backend);
