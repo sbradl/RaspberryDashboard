@@ -1,7 +1,12 @@
-﻿namespace SimRacingDashboard.Entities
+﻿using System;
+
+namespace SimRacingDashboard.Entities
 {
+    [Serializable]
     public struct CarState
     {
+        public DateTime DateTime { get; set; }
+
         public OilState Oil { get; set;}
 
         public WaterState Water { get; set; }

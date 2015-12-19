@@ -5,7 +5,7 @@ namespace SimRacingDashboard.DataAccess.PCars
 {
     public class CarStateGateway : ICarStateGateway
     {
-        public event EventHandler<SimRacingDashboard.Entities.CarState> CarStateChanged;
+        public event EventHandler<Entities.CarState> CarStateChanged;
 
         private volatile bool isRunning = true;
 
@@ -14,6 +14,10 @@ namespace SimRacingDashboard.DataAccess.PCars
         public CarStateGateway()
         {
             this.worker = new Thread(ReadData);
+        }
+
+        public void StartReading()
+        {
             this.worker.Start();
         }
 
@@ -31,22 +35,11 @@ namespace SimRacingDashboard.DataAccess.PCars
         {
             var parser = new PacketParser();
 
-            bool recorded = false;
-
             using (var udpClient = new UdpReader(5606))
             {
                 while (this.isRunning)
                 {
-                    Console.WriteLine("Waiting for data...");
                     var data = udpClient.ReadData();
-
-                    if (!recorded)
-                    {
-                        System.IO.File.WriteAllBytes("udp.bin", data);
-                        recorded = true;
-                    }
-
-                    Console.WriteLine("Data: {0} bytes", data.Length);
 
                     var carState = parser.Parse(data);
 

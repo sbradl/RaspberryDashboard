@@ -40,7 +40,7 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\SimRacingDashboard.DataAccess\SimRacingDashboard.DataAccess.csproj">
-      <Project>{9C369ECB-309F-497F-9756-0EA67026AD3F}</Project>
+      <Project>{9c369ecb-309f-497f-9756-0ea67026ad3f}</Project>
       <Name>SimRacingDashboard.DataAccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\SimRacingDashboard.Entities\SimRacingDashboard.Entities.csproj">

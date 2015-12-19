@@ -2,6 +2,7 @@
 
 namespace SimRacingDashboard.Entities
 {
+    [Serializable]
     public struct DrivingAssistsState
     {
         public bool ABS { get; set; }

@@ -35,20 +35,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ConsoleVisualizer.cs" />
+    <Compile Include="ConsoleRenderer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\SimRacingDashboard.Output\SimRacingDashboard.Output.csproj">
-      <Project>{72A3FBE6-D192-45D4-BAE1-161F19FBC236}</Project>
-      <Name>SimRacingDashboard.Output</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SimRacingDashboard.Entities\SimRacingDashboard.Entities.csproj">
-      <Project>{119BB8AF-8E1A-4CD5-BC05-1F19CAE45452}</Project>
-      <Name>SimRacingDashboard.Entities</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\SimRacingDashboard.Entities\SimRacingDashboard.Entities.csproj">
+      <Project>{119bb8af-8e1a-4cd5-bc05-1f19cae45452}</Project>
+      <Name>SimRacingDashboard.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SimRacingDashboard.Output\SimRacingDashboard.Output.csproj">
+      <Project>{72a3fbe6-d192-45d4-bae1-161f19fbc236}</Project>
+      <Name>SimRacingDashboard.Output</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

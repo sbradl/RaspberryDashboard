@@ -1,7 +1,11 @@
 ﻿using System;
 using SimRacingDashboard.DataAccess;
 using SimRacingDashboard.Output;
-using SimRacingDashboard.Output.Console;
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using System.Linq;
+using System.Configuration;
 
 namespace SimRacingDashboard
 {
@@ -11,44 +15,61 @@ namespace SimRacingDashboard
         {
             if (args.Length == 0)
             {
-                args = new [] { "PCars", "Console" };
+                args = new [] {
+                    ConfigurationManager.AppSettings["DataAccessPlugin"],
+                    ConfigurationManager.AppSettings["OutputPlugins"]
+                };
             }
 
-            Console.WriteLine("Starting {0}", System.AppDomain.CurrentDomain.FriendlyName);
+            Console.WriteLine("Starting {0}", AppDomain.CurrentDomain.FriendlyName);
 
             var backend = args[0];
-            var frontend = args[1];
+            var frontends = args[1];
 
             var gateway = CreateGateway(backend);
-            var visualizer = CreateVisualizer(frontend);
-            gateway.CarStateChanged += (sender, carState) => visualizer.Visualize(carState);
+            var renderers = CreateRenderers(frontends);
+
+            foreach (var renderer in renderers)
+            {
+                gateway.CarStateChanged += (sender, carState) => renderer.Render(carState);
+            }
+
+            gateway.StartReading();
 
             Console.WriteLine("Press any key to stop...");
             Console.ReadKey();
             Console.WriteLine();
             Console.WriteLine("Stopping...");
 
-            gateway.Shutdown();
+            gateway.Shutdown();           
         }
 
         private static ICarStateGateway CreateGateway(string backend)
         {
-            if (backend == "PCars")
-            {
-                return new DataAccess.PCars.CarStateGateway();
-            } 
-
-            throw new ArgumentException("Invalid backend: " + backend);
+           return GetServiceInstanceFrom<ICarStateGateway>(backend);
         }
 
-        private static ICarStateVisualizer CreateVisualizer(string frontend)
+        private static IEnumerable<ICarStateRenderer> CreateRenderers(string frontends)
         {
-            if (frontend == "Console")
-            {
-                return new ConsoleVisualizer();
-            }
+            string[] frontendNames = frontends.Split(',');
 
-            throw new ArgumentException("Invalid frontend: " + frontend);
+            return frontendNames.Select(name => GetServiceInstanceFrom<ICarStateRenderer>(name));
+        }
+
+        private static T GetServiceInstanceFrom<T>(string pluginName)
+        {
+            var plugin = LoadPlugin(pluginName);
+            var type = plugin.ExportedTypes.First(t => t.GetInterfaces().Contains(typeof(T)));
+
+            return (T)Activator.CreateInstance(type);
+        }
+
+        private static Assembly LoadPlugin(string name)
+        {
+            var dll = Path.GetFullPath(name + ".dll");
+            var assembly = Assembly.LoadFile(dll);
+
+            return assembly;
         }
     }
 }

@@ -1,5 +1,8 @@
-﻿namespace SimRacingDashboard.Entities
+﻿using System;
+
+namespace SimRacingDashboard.Entities
 {
+    [Serializable]
     public struct FuelState
     {
         public Pressure Pressure { get; set; }

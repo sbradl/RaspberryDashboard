@@ -1,5 +1,8 @@
-﻿namespace SimRacingDashboard.Entities
+﻿using System;
+
+namespace SimRacingDashboard.Entities
 {
+    [Serializable]
     public struct Temperature
     {
         public float Value { get; set;}

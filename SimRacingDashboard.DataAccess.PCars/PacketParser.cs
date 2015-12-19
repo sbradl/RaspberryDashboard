@@ -21,7 +21,10 @@ namespace SimRacingDashboard.DataAccess.PCars
         private class Helper
         {
             private BinaryReader reader;
-            private CarState carState = new CarState();
+            private CarState carState = new CarState
+            {
+                DateTime = DateTime.Now
+            };
 
             public Helper(BinaryReader reader)
             {
@@ -165,8 +168,7 @@ namespace SimRacingDashboard.DataAccess.PCars
             {
                 Goto(128);
                 var gearAndNumGears = this.reader.ReadByte();
-
-                var gear = (gearAndNumGears << 4) >> 4;
+                var gear = ((byte)(gearAndNumGears << 4)) >> 4;
                 var numGears = gearAndNumGears >> 4;
 
                 this.carState.GearBox = new GearBoxState
@@ -255,6 +257,12 @@ namespace SimRacingDashboard.DataAccess.PCars
                 var internalAirTemp3 = this.reader.ReadUInt16();
                 var internalAirTemp4 = this.reader.ReadUInt16();
 
+                Goto(392);
+                var rideHeight1 = this.reader.ReadSingle();
+                var rideHeight2 = this.reader.ReadSingle();
+                var rideHeight3 = this.reader.ReadSingle();
+                var rideHeight4 = this.reader.ReadSingle();
+
                 Goto(440);
                 var pressure1 = this.reader.ReadUInt16();
                 var pressure2 = this.reader.ReadUInt16();
@@ -263,10 +271,10 @@ namespace SimRacingDashboard.DataAccess.PCars
 
                 this.carState.Tires = new Tires
                 {
-                    FrontLeft = new Tire(),
-                    FrontRight = new Tire(),
-                    RearLeft = new Tire(),
-                    RearRight = new Tire()
+                    FrontLeft = new Tire { RideHeight = rideHeight1 },
+                    FrontRight = new Tire { RideHeight = rideHeight2 },
+                    RearLeft = new Tire { RideHeight = rideHeight3 },
+                    RearRight = new Tire { RideHeight = rideHeight4 },
                 };
             }
 

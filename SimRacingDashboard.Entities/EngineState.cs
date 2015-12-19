@@ -2,6 +2,7 @@
 
 namespace SimRacingDashboard.Entities
 {
+    [Serializable]
     public struct EngineState
     {
         public bool IsRunning { get; set; }
@@ -13,7 +14,12 @@ namespace SimRacingDashboard.Entities
         {
             get
             {
-                return this.Rpm / this.MaxRpm;
+                if(this.MaxRpm == 0)
+                {
+                    return 0;
+                }
+
+                return this.Rpm / (float)this.MaxRpm;
             }
         }
 
@@ -21,7 +27,7 @@ namespace SimRacingDashboard.Entities
         {
             get
             {
-                return this.RpmLevel >= 0.9;
+                return this.RpmLevel > 0.95;
             }
         }
 

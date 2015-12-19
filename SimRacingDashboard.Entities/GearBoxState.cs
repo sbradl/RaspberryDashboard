@@ -2,6 +2,7 @@
 
 namespace SimRacingDashboard.Entities
 {
+    [Serializable]
     public struct GearBoxState
     {
         public byte CurrentGear { get; set; }

@@ -7,6 +7,8 @@ namespace SimRacingDashboard.DataAccess
     {
         event EventHandler<CarState> CarStateChanged;
 
+        void StartReading();
+
         void Shutdown();
     }
 }

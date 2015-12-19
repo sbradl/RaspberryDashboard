@@ -29,6 +29,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
@@ -52,13 +53,22 @@
       <Project>{119BB8AF-8E1A-4CD5-BC05-1F19CAE45452}</Project>
       <Name>SimRacingDashboard.Entities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SimRacingDashboard.Output.Console\SimRacingDashboard.Output.Console.csproj">
-      <Project>{67A0556E-00FF-47A0-8456-3900E4EBC323}</Project>
-      <Name>SimRacingDashboard.Output.Console</Name>
+    <ProjectReference Include="..\SimRacingDashboard.Output.Beep\SimRacingDashboard.Output.Beep.csproj">
+      <Project>{a2a2dca4-be69-46d4-98d2-16d056a74f68}</Project>
+      <Name>SimRacingDashboard.Output.Beep</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SimRacingDashboard.Output.File\SimRacingDashboard.Output.File.csproj">
+      <Project>{e465ac6b-866d-42de-8478-4071b1e576a0}</Project>
+      <Name>SimRacingDashboard.Output.File</Name>
     </ProjectReference>
     <ProjectReference Include="..\SimRacingDashboard.Output\SimRacingDashboard.Output.csproj">
-      <Project>{72A3FBE6-D192-45D4-BAE1-161F19FBC236}</Project>
+      <Project>{72a3fbe6-d192-45d4-bae1-161f19fbc236}</Project>
       <Name>SimRacingDashboard.Output</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
 </Project>
