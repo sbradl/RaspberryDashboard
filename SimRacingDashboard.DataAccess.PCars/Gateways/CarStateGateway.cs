@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Threading;
 
 namespace SimRacingDashboard.DataAccess.PCars
@@ -10,6 +11,9 @@ namespace SimRacingDashboard.DataAccess.PCars
         private volatile bool isRunning = true;
 
         private Thread worker;
+
+        //private UdpReader udpClient = new UdpReader(5606);
+        private UdpReplayer udpClient = new UdpReplayer();
 
         public CarStateGateway()
         {
@@ -25,7 +29,9 @@ namespace SimRacingDashboard.DataAccess.PCars
         {
             this.isRunning = false;
 
-            if (!this.worker.Join(TimeSpan.FromSeconds(3)))
+            this.udpClient.Dispose();
+
+            if (!this.worker.Join(TimeSpan.FromSeconds(1)))
             {
                 this.worker.Abort();
             }
@@ -34,18 +40,25 @@ namespace SimRacingDashboard.DataAccess.PCars
         private void ReadData()
         {
             var parser = new PacketParser();
-
-            using (var udpClient = new UdpReader(5606))
+            
+            //using (var stream = new FileStream("telemetry.udp", FileMode.Create, FileAccess.Write, FileShare.None))
+            //using(var writer = new BinaryWriter(stream))
             {
                 while (this.isRunning)
                 {
                     var data = udpClient.ReadData();
 
+                    if(!this.isRunning)
+                    {
+                        return;
+                    }
+
                     var carState = parser.Parse(data);
 
-                    if (this.CarStateChanged != null)
+                    if (carState.HasValue && this.CarStateChanged != null)
                     {
-                        this.CarStateChanged(this, carState);
+                        //writer.Write(data);
+                        this.CarStateChanged(this, carState.Value);
                     }
                 }
             }

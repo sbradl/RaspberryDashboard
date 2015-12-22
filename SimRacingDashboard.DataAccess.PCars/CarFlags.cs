@@ -5,13 +5,13 @@ namespace SimRacingDashboard.DataAccess.PCars
     [Flags]
     enum CarFlags : byte
     {
-        Headlight,
-        EngineActive,
-        EngineWarning,
-        SpeedLimiter,
-        ABS,
-        Handbrake,
-        StabilityControl,
-        TractionControl,
+        Headlight = 1 << 0,
+        EngineActive = 1 << 1,
+        EngineWarning = 1 << 2,
+        SpeedLimiter = 1 << 3,
+        ABS = 1 << 4,
+        Handbrake = 1 << 5,
+        StabilityControl = 1 << 6,
+        TractionControl = 1 << 7
     }
 }

@@ -38,10 +38,8 @@ namespace SimRacingDashboard
 
             Console.WriteLine("Press any key to stop...");
             Console.ReadKey();
-            Console.WriteLine();
-            Console.WriteLine("Stopping...");
 
-            gateway.Shutdown();           
+            gateway.Shutdown();
         }
 
         private static ICarStateGateway CreateGateway(string backend)

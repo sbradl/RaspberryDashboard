@@ -6,21 +6,23 @@ namespace SimRacingDashboard.DataAccess.PCars
 {
     public class PacketParser
     {
-        public CarState Parse(byte[] data)
+        public CarState? Parse(byte[] data)
         {
             using (var memoryStream = new MemoryStream(data))
             using (var binaryReader = new BinaryReader(memoryStream))
             {
-                var buildVersionNumber = binaryReader.ReadUInt16();
-                var sequencePacketType = binaryReader.ReadByte();
+                var helper = new Helper(binaryReader);
 
-                return new Helper(binaryReader).ReadCarState();
+                return helper.ReadCarState();
             }
         }
 
         private class Helper
         {
             private BinaryReader reader;
+
+            private CarFlags carFlags;
+
             private CarState carState = new CarState
             {
                 DateTime = DateTime.Now
@@ -31,65 +33,138 @@ namespace SimRacingDashboard.DataAccess.PCars
                 this.reader = reader;  
             }
 
-            public CarState ReadCarState()
-            {
-                Goto(3);
-                var gameAndSessionState = this.reader.ReadByte();
+            public GameState GameState { get; private set; }
+            public PCarsSessionState SessionState { get; private set; }
 
-                // participant info
-                Goto(4);
+            public CarState? ReadCarState()
+            {
+                this.carState.Version = this.reader.ReadUInt16();
+
+                if(this.carState.Version == 0)
+                {
+                    return null;
+                }
+                
+                int packetTypeAndSequence = this.reader.ReadByte();
+                int packetType = packetTypeAndSequence & 3;
+                int frameSequence = packetTypeAndSequence >> 2;
+
+                if (packetType != 0)
+                {
+                    return null;
+                }
+
+                //Goto(3);
+                var gameAndSessionState = this.reader.ReadByte();
+                byte gameState;
+                byte sessionState;
+                SplitByte(gameAndSessionState, out gameState, out sessionState);
+                this.GameState = (GameState)gameState;
+
+                if(this.GameState != GameState.Playing)
+                {
+                    return null;
+                }
+
+                this.SessionState = (PCarsSessionState)sessionState;
+
+                //// participant info
+                //Goto(4);
                 var viewedParticipant = this.reader.ReadSByte();
                 var numParticipants = this.reader.ReadSByte();
 
-                // unfiltered input
-                Goto(6);
-                var unfilteredThrottle = this.reader.ReadByte();
-                var unfilteredBrake = this.reader.ReadByte();
-                var unfilteredSteering = this.reader.ReadSByte();
-                var unfilteredClutch = this.reader.ReadByte();
-                var raceStateFlags = this.reader.ReadByte();
+                this.carState.Session = new SessionInfo
+                {
+                    State = ToGeneralSessionState(this.SessionState),
+                    Participants = numParticipants
+                };
 
-                // event info
+                //// unfiltered input
+                //Goto(6);
+                //var unfilteredThrottle = this.reader.ReadByte();
+                //var unfilteredBrake = this.reader.ReadByte();
+                //var unfilteredSteering = this.reader.ReadSByte();
+                //var unfilteredClutch = this.reader.ReadByte();
+                //var raceStateFlags = this.reader.ReadByte();
+
+                //// event info
                 Goto(11);
                 var lapsInEvent = this.reader.ReadByte();
 
-                // timings
-                // Timings
+                //// Timings
                 Goto(12);
-                var bestLapTime = this.reader.ReadSingle();                 
-                var lastLapTime = this.reader.ReadSingle();                 
-                var currentTime = this.reader.ReadSingle();                 
-                var splitTimeAhead = this.reader.ReadSingle();             
-                var splitTimeBehind = this.reader.ReadSingle();             
-                var splitTime = this.reader.ReadSingle();                   
-                var eventTimeRemaining = this.reader.ReadSingle();          
-                var personalFastestLapTime = this.reader.ReadSingle();      
-                var worldFastestLapTime = this.reader.ReadSingle();         
-                var currentSector1Time = this.reader.ReadSingle();         
-                var currentSector2Time = this.reader.ReadSingle();          
-                var currentSector3Time = this.reader.ReadSingle();          
-                var fastestSector1Time = this.reader.ReadSingle();          
-                var fastestSector2Time = this.reader.ReadSingle();          
-                var fastestSector3Time = this.reader.ReadSingle();          
-                var personalFastestSector1Time = this.reader.ReadSingle();  
-                var personalFastestSector2Time = this.reader.ReadSingle();  
+                var bestLapTime = this.reader.ReadSingle();
+                var lastLapTime = this.reader.ReadSingle();
+                var currentTime = this.reader.ReadSingle();
+                var splitTimeAhead = this.reader.ReadSingle();
+                var splitTimeBehind = this.reader.ReadSingle();
+                var splitTime = this.reader.ReadSingle();
+                var eventTimeRemaining = this.reader.ReadSingle();
+                var personalFastestLapTime = this.reader.ReadSingle();
+                var worldFastestLapTime = this.reader.ReadSingle();
+                var currentSector1Time = this.reader.ReadSingle();
+                var currentSector2Time = this.reader.ReadSingle();
+                var currentSector3Time = this.reader.ReadSingle();
+                var fastestSector1Time = this.reader.ReadSingle();
+                var fastestSector2Time = this.reader.ReadSingle();
+                var fastestSector3Time = this.reader.ReadSingle();
+                var personalFastestSector1Time = this.reader.ReadSingle();
+                var personalFastestSector2Time = this.reader.ReadSingle();
                 var personalFastestSector3Time = this.reader.ReadSingle();
-                var worldFastestSector1Time = this.reader.ReadSingle();    
-                var worldFastestSector2Time = this.reader.ReadSingle();     
+                var worldFastestSector1Time = this.reader.ReadSingle();
+                var worldFastestSector2Time = this.reader.ReadSingle();
                 var worldFastestSector3Time = this.reader.ReadSingle();
+
+                this.carState.Timings = new TimingInfo
+                {
+                    BestLapTime = ToTimeSpan(bestLapTime),
+                    LastLapTime = ToTimeSpan(lastLapTime),
+                    CurrentLapTime = ToTimeSpan(currentTime),
+                    SplitTime = ToTimeSpan(splitTime),
+                    SplitTimeDifference = ToTimeSpan(splitTimeAhead), // TODO: decide which one to use
+                    CurrentSectorTimes = new[]
+                    {
+                        ToTimeSpan(currentSector1Time),
+                        ToTimeSpan(currentSector2Time),
+                        ToTimeSpan(currentSector3Time)
+                    },
+                    FastestSectorTimes = new[]
+                    {
+                        ToTimeSpan(fastestSector1Time),
+                        ToTimeSpan(fastestSector2Time),
+                        ToTimeSpan(fastestSector3Time)
+                    }
+                };
 
                 // flags
                 Goto(98);
-                var highestFlag = this.reader.ReadByte();
+                var highestFlagState = this.reader.ReadByte();
+                byte highestFlagColor;
+                byte flagReason;
+                SplitByte(highestFlagState, out highestFlagColor, out flagReason);
 
-                // pit info
-                Goto(99);
-                var pitModeSchedule = this.reader.ReadByte();
-                
+                Goto(1360);
+                var trackLength = this.reader.ReadSingle();
+
+                this.carState.Event = new EventState
+                {
+                    LapsInEvent = lapsInEvent,
+                    TimeRemaining = ToTimeSpan(eventTimeRemaining),
+                    Flag = (Flag)highestFlagColor,
+                    TrackLength = trackLength
+                };
+
+                //// pit info
+                //Goto(99);
+                //var pitModeSchedule = this.reader.ReadByte();
+
+                Goto(110);
+                this.carFlags = (CarFlags)this.reader.ReadByte();
+
                 ReadOilState();
                 ReadWaterState();
                 ReadFuelState();
-               
+
                 Goto(120);
                 this.carState.Speed = this.reader.ReadSingle();
 
@@ -97,6 +172,21 @@ namespace SimRacingDashboard.DataAccess.PCars
                 ReadGearBoxState();
                 ReadTireStates();
                 ReadControlLightStates();
+
+                //// participant info
+                Goto(464);
+                this.carState.Position = new[]
+                {
+                    this.reader.ReadInt16(),
+                    this.reader.ReadInt16(),
+                    this.reader.ReadInt16()
+                };
+
+                this.carState.CurrentTrackDistance = this.reader.ReadUInt16();
+
+                Goto(473);
+                this.carState.LapsCompleted = this.reader.ReadByte();
+                this.carState.CurrentLap = this.reader.ReadByte();
 
                 return this.carState;
             }
@@ -160,7 +250,7 @@ namespace SimRacingDashboard.DataAccess.PCars
                     BoostAmount = boostAmount,
                     Speed = speed,
                     Torque = torque,
-                    // TODO: IsRunning
+                    IsRunning = this.carFlags.HasFlag(CarFlags.EngineActive)
                 };
             }
 
@@ -168,13 +258,14 @@ namespace SimRacingDashboard.DataAccess.PCars
             {
                 Goto(128);
                 var gearAndNumGears = this.reader.ReadByte();
-                var gear = ((byte)(gearAndNumGears << 4)) >> 4;
-                var numGears = gearAndNumGears >> 4;
+                byte gear;
+                byte numGears;
+                SplitByte(gearAndNumGears, out gear, out numGears);
 
                 this.carState.GearBox = new GearBoxState
                 {
-                    CurrentGear = (byte)gear,
-                    NumGears = (byte)numGears
+                    CurrentGear = gear,
+                    NumGears = numGears
                 };
             }
 
@@ -211,10 +302,10 @@ namespace SimRacingDashboard.DataAccess.PCars
                 var temp3 = this.reader.ReadByte();
                 var temp4 = this.reader.ReadByte();
 
-                var grip1 = this.reader.ReadByte();
-                var grip2 = this.reader.ReadByte();
-                var grip3 = this.reader.ReadByte();
-                var grip4 = this.reader.ReadByte();
+                var grip1 = Normalize(this.reader.ReadByte());
+                var grip2 = Normalize(this.reader.ReadByte());
+                var grip3 = Normalize(this.reader.ReadByte());
+                var grip4 = Normalize(this.reader.ReadByte());
 
                 var heightAboveGround1 = this.reader.ReadSingle();
                 var heightAboveGround2 = this.reader.ReadSingle();
@@ -271,25 +362,54 @@ namespace SimRacingDashboard.DataAccess.PCars
 
                 this.carState.Tires = new Tires
                 {
-                    FrontLeft = new Tire { RideHeight = rideHeight1 },
-                    FrontRight = new Tire { RideHeight = rideHeight2 },
-                    RearLeft = new Tire { RideHeight = rideHeight3 },
-                    RearRight = new Tire { RideHeight = rideHeight4 },
+                    FrontLeft = new Tire
+                    {
+                        RideHeightInMeter = rideHeight1,
+                        HeightAboveGround = heightAboveGround1,
+                        SlipSpeed = tyreSlipSpeed1,
+                        GripLevel = grip1,
+                        WearLevel = wear1,
+                        Pressure = new Pressure { Value = pressure1, Unit = PressureUnit.KPa }
+                    },
+                    FrontRight = new Tire
+                    {
+                        RideHeightInMeter = rideHeight2,
+                        HeightAboveGround = heightAboveGround2,
+                        SlipSpeed = tyreSlipSpeed2,
+                        GripLevel = grip2,
+                        WearLevel = wear2,
+                        Pressure = new Pressure { Value = pressure2, Unit = PressureUnit.KPa }
+                    },
+                    RearLeft = new Tire
+                    {
+                        RideHeightInMeter = rideHeight3,
+                        HeightAboveGround = heightAboveGround3,
+                        SlipSpeed = tyreSlipSpeed3,
+                        GripLevel = grip3,
+                        WearLevel = wear3,
+                        Pressure = new Pressure { Value = pressure3, Unit = PressureUnit.KPa }
+                    },
+                    RearRight = new Tire
+                    {
+                        RideHeightInMeter = rideHeight4,
+                        HeightAboveGround = heightAboveGround4,
+                        SlipSpeed = tyreSlipSpeed4,
+                        GripLevel = grip4,
+                        WearLevel = wear4,
+                        Pressure = new Pressure { Value = pressure4, Unit = PressureUnit.KPa }
+                    },
                 };
             }
 
             private void ReadControlLightStates()
             {
-                Goto(110);
-                CarFlags carFlags = (CarFlags)this.reader.ReadByte();
-
                 this.carState.ControlLights = new ControlLightsState
                 {
                     DrivingAssists = new DrivingAssistsState
                     {
-                        ABS = carFlags.HasFlag(CarFlags.ABS),
-                        StabilityControl = carFlags.HasFlag(CarFlags.StabilityControl),
-                        TractionControl = carFlags.HasFlag(CarFlags.TractionControl)
+                        ABS = !carFlags.HasFlag(CarFlags.ABS),
+                        StabilityControl = !carFlags.HasFlag(CarFlags.StabilityControl),
+                        TractionControl = !carFlags.HasFlag(CarFlags.TractionControl)
                     },
                     EngineWarning = carFlags.HasFlag(CarFlags.EngineWarning),
                     Handbrake = carFlags.HasFlag(CarFlags.Handbrake),
@@ -319,6 +439,58 @@ namespace SimRacingDashboard.DataAccess.PCars
                     Value = this.reader.ReadUInt16(),
                     Unit = PressureUnit.KPa
                 };
+            }
+
+            private void SplitByte(byte input, out byte low, out byte high)
+            {
+                low = (byte)(((byte)(input << 4)) >> 4);
+                high = (byte)(input >> 4);
+            }
+
+            private SessionState ToGeneralSessionState(PCarsSessionState sessionState)
+            {
+                switch(sessionState)
+                {
+                    case PCarsSessionState.Practice:
+                        return Entities.SessionState.Practice;
+
+                    case PCarsSessionState.Test:
+                        return Entities.SessionState.Warmup;
+
+                    case PCarsSessionState.Qualifying:
+                        return Entities.SessionState.Qualify;
+
+                    case PCarsSessionState.FormationLap:
+                    case PCarsSessionState.Race:
+                        return Entities.SessionState.Race;
+
+                    case PCarsSessionState.TimeAttack:
+                        return Entities.SessionState.TimeAttack;
+                }
+
+                return Entities.SessionState.Race;
+            }
+
+            private TimeSpan ToTimeSpan(float time)
+            {
+                //if(time > TimeSpan.MaxValue.TotalSeconds)
+                //{
+                //    return TimeSpan.MaxValue;
+                //}
+
+                //if(time < TimeSpan.MinValue.TotalSeconds)
+                //{
+                //    return TimeSpan.MinValue;
+                //}
+
+                return TimeSpan.FromSeconds(time);
+            }
+
+            private float Normalize(byte value)
+            {
+                float fValue = value;
+
+                return fValue / byte.MaxValue;
             }
         }
     }

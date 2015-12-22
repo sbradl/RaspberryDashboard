@@ -15,7 +15,7 @@ namespace SimRacingDashboard.Entities
         {
             get
             {
-                return (new float[] { FrontLeft.RideHeight, FrontRight.RideHeight, RearLeft.RideHeight, RearRight.RideHeight }).Min();
+                return (new float[] { FrontLeft.RideHeightInMeter, FrontRight.RideHeightInMeter, RearLeft.RideHeightInMeter, RearRight.RideHeightInMeter }).Min();
             }
         }
 
@@ -23,8 +23,7 @@ namespace SimRacingDashboard.Entities
         {
             get
             {
-                return FrontLeft.RideHeight <= 0 || FrontRight.RideHeight <= 0 ||
-                    RearLeft.RideHeight <= 0 || RearRight.RideHeight <= 0;
+                return this.MinRideHeight <= 0;
             }
         }
     }
