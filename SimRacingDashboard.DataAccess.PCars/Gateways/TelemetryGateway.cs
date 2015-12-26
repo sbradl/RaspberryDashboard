@@ -12,8 +12,8 @@ namespace SimRacingDashboard.DataAccess.PCars
 
         private Thread worker;
 
-        //private UdpReader udpClient = new UdpReader(5606);
-        private UdpReplayer udpClient = new UdpReplayer();
+        private UdpReader udpClient = new UdpReader(5606);
+        //private UdpReplayer udpClient = new UdpReplayer();
 
         public TelemetryGateway()
         {

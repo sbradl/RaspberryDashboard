@@ -3,7 +3,7 @@ using System;
 
 namespace SimRacingDashboard.Output.Beep
 {
-    public class Beeper : ICarStateRenderer
+    public class Beeper : ITelemetryRenderer
     {
         private TelemetryDataSet? oldState = null;
         private TelemetryDataSet newState;
@@ -20,6 +20,10 @@ namespace SimRacingDashboard.Output.Beep
             Process();
 
             this.oldState = this.newState;
+        }
+
+        public void Dispose()
+        {
         }
 
         private void Process()

@@ -4,16 +4,21 @@ using System.IO;
 
 namespace SimRacingDashboard.Output.File
 {
-    public class FileRenderer : ICarStateRenderer
+    public class FileRenderer : ITelemetryRenderer
     {
         private BinaryFormatter formatter = new BinaryFormatter();
-
+        
         public void Render(TelemetryDataSet carState)
         {
             using (var stream = new FileStream("telemetry.bin", FileMode.Append, FileAccess.Write, FileShare.None))
             {
                 formatter.Serialize(stream, carState);
             }
+        }
+
+        public void Dispose()
+        {
+
         }
     }
 }

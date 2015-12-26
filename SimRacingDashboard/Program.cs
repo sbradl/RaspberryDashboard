@@ -29,17 +29,29 @@ namespace SimRacingDashboard
             var gateway = CreateGateway(backend);
             var renderers = CreateRenderers(frontends);
 
-            foreach (var renderer in renderers)
+            try
             {
-                gateway.TelemetryChanged += (sender, carState) => renderer.Render(carState);
+                foreach (var renderer in renderers)
+                {
+                    gateway.TelemetryChanged += (sender, carState) => renderer.Render(carState);
+                }
+
+                gateway.StartReading();
+
+                Console.WriteLine("Press any key to stop...");
+                Console.ReadKey();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
             }
 
-            gateway.StartReading();
-
-            Console.WriteLine("Press any key to stop...");
-            Console.ReadKey();
-
             gateway.Shutdown();
+
+            foreach (var renderer in renderers)
+            {
+                renderer.Dispose();
+            }
         }
 
         private static ITelemetryGateway CreateGateway(string backend)
@@ -47,11 +59,13 @@ namespace SimRacingDashboard
            return GetServiceInstanceFrom<ITelemetryGateway>(backend);
         }
 
-        private static IEnumerable<ICarStateRenderer> CreateRenderers(string frontends)
+        private static IEnumerable<ITelemetryRenderer> CreateRenderers(string frontends)
         {
             string[] frontendNames = frontends.Split(',');
 
-            return frontendNames.Select(name => GetServiceInstanceFrom<ICarStateRenderer>(name));
+            return frontendNames
+                .Select(name => GetServiceInstanceFrom<ITelemetryRenderer>(name))
+                .ToList();
         }
 
         private static T GetServiceInstanceFrom<T>(string pluginName)
