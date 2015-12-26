@@ -12,9 +12,9 @@ namespace SimRacingDashboard.Profiler.ViewModels
 
         private Axis xAxis = new LinearAxis { Unit = "s", Position = AxisPosition.Bottom, IsZoomEnabled = true };
 
-        private IList<CarState> datasets;
+        private IList<TelemetryDataSet> datasets;
 
-        public AbstractViewModelWithHorizontalLineSeriesPlot(IList<CarState> datasets)
+        public AbstractViewModelWithHorizontalLineSeriesPlot(IList<TelemetryDataSet> datasets)
         {
             this.datasets = datasets;
 

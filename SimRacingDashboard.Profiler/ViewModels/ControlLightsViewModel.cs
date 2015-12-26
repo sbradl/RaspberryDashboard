@@ -18,7 +18,7 @@ namespace SimRacingDashboard.Profiler.ViewModels
         public bool EngineWarning { get; private set; }
         public bool SpeedLimiter { get; private set; }
 
-        internal void Add(CarState data)
+        internal void Add(TelemetryDataSet data)
         {
             this.Abs = data.ControlLights.DrivingAssists.ABS;
             this.TractionControl = data.ControlLights.DrivingAssists.TractionControl;

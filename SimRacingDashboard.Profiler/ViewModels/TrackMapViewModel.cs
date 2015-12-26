@@ -14,7 +14,7 @@ namespace SimRacingDashboard.Profiler.ViewModels
         //private LapViewModel lap;
         private EllipseAnnotation annotation = new EllipseAnnotation { Width = 25, Height = 25, Stroke = OxyColors.Red, StrokeThickness = 2, Fill = OxyColors.Transparent };
 
-        public TrackMapViewModel(IEnumerable<CarState> datasets)
+        public TrackMapViewModel(IEnumerable<TelemetryDataSet> datasets)
         {
             this.DataPlot.PlotType = PlotType.Cartesian;
             this.DataPlot.Series.Add(this.position);

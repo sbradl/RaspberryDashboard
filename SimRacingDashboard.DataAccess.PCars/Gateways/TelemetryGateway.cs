@@ -4,9 +4,9 @@ using System.Threading;
 
 namespace SimRacingDashboard.DataAccess.PCars
 {
-    public class CarStateGateway : ICarStateGateway
+    public class TelemetryGateway : ITelemetryGateway
     {
-        public event EventHandler<Entities.CarState> CarStateChanged;
+        public event EventHandler<Entities.TelemetryDataSet> TelemetryChanged;
 
         private volatile bool isRunning = true;
 
@@ -15,7 +15,7 @@ namespace SimRacingDashboard.DataAccess.PCars
         //private UdpReader udpClient = new UdpReader(5606);
         private UdpReplayer udpClient = new UdpReplayer();
 
-        public CarStateGateway()
+        public TelemetryGateway()
         {
             this.worker = new Thread(ReadData);
         }
@@ -53,12 +53,12 @@ namespace SimRacingDashboard.DataAccess.PCars
                         return;
                     }
 
-                    var carState = parser.Parse(data);
+                    var telemetryDataSet = parser.Parse(data);
 
-                    if (carState.HasValue && this.CarStateChanged != null)
+                    if (telemetryDataSet.HasValue && this.TelemetryChanged != null)
                     {
                         //writer.Write(data);
-                        this.CarStateChanged(this, carState.Value);
+                        this.TelemetryChanged(this, telemetryDataSet.Value);
                     }
                 }
             }

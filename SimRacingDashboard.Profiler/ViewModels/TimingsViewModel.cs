@@ -10,7 +10,7 @@ namespace SimRacingDashboard.Profiler.ViewModels
         public TimeSpan SplitTime { get; private set; }
         public TimeSpan SplitTimeDifference { get; private set; }
 
-        internal void Add(CarState data)
+        internal void Add(TelemetryDataSet data)
         {
             this.CurrentLapTime = data.Timings.CurrentLapTime;
             this.SplitTime = data.Timings.SplitTime;

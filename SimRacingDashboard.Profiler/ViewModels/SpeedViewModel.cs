@@ -12,7 +12,7 @@ namespace SimRacingDashboard.Profiler.ViewModels
     {
         public float Value { get; private set; }
 
-        internal void Add(CarState data)
+        internal void Add(TelemetryDataSet data)
         {
             this.Value = data.Speed;
             RaisePropertyChanged(() => Value);

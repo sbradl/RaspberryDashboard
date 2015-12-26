@@ -6,14 +6,14 @@ namespace SimRacingDashboard.DataAccess.PCars
 {
     public class PacketParser
     {
-        public CarState? Parse(byte[] data)
+        public TelemetryDataSet? Parse(byte[] data)
         {
             using (var memoryStream = new MemoryStream(data))
             using (var binaryReader = new BinaryReader(memoryStream))
             {
                 var helper = new Helper(binaryReader);
 
-                return helper.ReadCarState();
+                return helper.ReadTelemetry();
             }
         }
 
@@ -23,7 +23,7 @@ namespace SimRacingDashboard.DataAccess.PCars
 
             private CarFlags carFlags;
 
-            private CarState carState = new CarState
+            private TelemetryDataSet telemetry = new TelemetryDataSet
             {
                 DateTime = DateTime.Now
             };
@@ -36,11 +36,11 @@ namespace SimRacingDashboard.DataAccess.PCars
             public GameState GameState { get; private set; }
             public PCarsSessionState SessionState { get; private set; }
 
-            public CarState? ReadCarState()
+            public TelemetryDataSet? ReadTelemetry()
             {
-                this.carState.Version = this.reader.ReadUInt16();
+                this.telemetry.Version = this.reader.ReadUInt16();
 
-                if(this.carState.Version == 0)
+                if(this.telemetry.Version == 0)
                 {
                     return null;
                 }
@@ -73,7 +73,7 @@ namespace SimRacingDashboard.DataAccess.PCars
                 var viewedParticipant = this.reader.ReadSByte();
                 var numParticipants = this.reader.ReadSByte();
 
-                this.carState.Session = new SessionInfo
+                this.telemetry.Session = new SessionInfo
                 {
                     State = ToGeneralSessionState(this.SessionState),
                     Participants = numParticipants
@@ -115,7 +115,7 @@ namespace SimRacingDashboard.DataAccess.PCars
                 var worldFastestSector2Time = this.reader.ReadSingle();
                 var worldFastestSector3Time = this.reader.ReadSingle();
 
-                this.carState.Timings = new TimingInfo
+                this.telemetry.Timings = new TimingInfo
                 {
                     BestLapTime = ToTimeSpan(bestLapTime),
                     LastLapTime = ToTimeSpan(lastLapTime),
@@ -146,7 +146,7 @@ namespace SimRacingDashboard.DataAccess.PCars
                 Goto(1360);
                 var trackLength = this.reader.ReadSingle();
 
-                this.carState.Event = new EventState
+                this.telemetry.Event = new EventState
                 {
                     LapsInEvent = lapsInEvent,
                     TimeRemaining = ToTimeSpan(eventTimeRemaining),
@@ -166,7 +166,7 @@ namespace SimRacingDashboard.DataAccess.PCars
                 ReadFuelState();
 
                 Goto(120);
-                this.carState.Speed = this.reader.ReadSingle();
+                this.telemetry.Speed = this.reader.ReadSingle();
 
                 ReadEngineState();
                 ReadGearBoxState();
@@ -175,26 +175,26 @@ namespace SimRacingDashboard.DataAccess.PCars
 
                 //// participant info
                 Goto(464);
-                this.carState.Position = new[]
+                this.telemetry.Position = new[]
                 {
                     this.reader.ReadInt16(),
                     this.reader.ReadInt16(),
                     this.reader.ReadInt16()
                 };
 
-                this.carState.CurrentTrackDistance = this.reader.ReadUInt16();
+                this.telemetry.CurrentTrackDistance = this.reader.ReadUInt16();
 
                 Goto(473);
-                this.carState.LapsCompleted = this.reader.ReadByte();
-                this.carState.CurrentLap = this.reader.ReadByte();
+                this.telemetry.LapsCompleted = this.reader.ReadByte();
+                this.telemetry.CurrentLap = this.reader.ReadByte();
 
-                return this.carState;
+                return this.telemetry;
             }
             
             private void ReadOilState()
             {
                 Goto(100);
-                this.carState.Oil = new OilState
+                this.telemetry.Oil = new OilState
                 {
                     Temperature = ReadTemperature(),
                     Pressure = ReadPressure()
@@ -204,7 +204,7 @@ namespace SimRacingDashboard.DataAccess.PCars
             private void ReadWaterState()
             {
                 Goto(104);
-                this.carState.Water = new WaterState
+                this.telemetry.Water = new WaterState
                 {
                     Temperature = ReadTemperature(),
                     Pressure = ReadPressure()
@@ -222,7 +222,7 @@ namespace SimRacingDashboard.DataAccess.PCars
                 Goto(116);
                 var level = this.reader.ReadSingle();
 
-                this.carState.Fuel = new FuelState
+                this.telemetry.Fuel = new FuelState
                 {
                     Pressure = pressure,
                     CapacityInLiters = capacityInLiters,
@@ -243,7 +243,7 @@ namespace SimRacingDashboard.DataAccess.PCars
                 var speed = this.reader.ReadSingle();
                 var torque = this.reader.ReadSingle();
 
-                this.carState.Engine = new EngineState
+                this.telemetry.Engine = new EngineState
                 {
                     Rpm = rpm,
                     MaxRpm = maxRpm,
@@ -262,7 +262,7 @@ namespace SimRacingDashboard.DataAccess.PCars
                 byte numGears;
                 SplitByte(gearAndNumGears, out gear, out numGears);
 
-                this.carState.GearBox = new GearBoxState
+                this.telemetry.GearBox = new GearBoxState
                 {
                     CurrentGear = gear,
                     NumGears = numGears
@@ -360,7 +360,7 @@ namespace SimRacingDashboard.DataAccess.PCars
                 var pressure3 = this.reader.ReadUInt16();
                 var pressure4 = this.reader.ReadUInt16();
 
-                this.carState.Tires = new Tires
+                this.telemetry.Tires = new Tires
                 {
                     FrontLeft = new Tire
                     {
@@ -403,7 +403,7 @@ namespace SimRacingDashboard.DataAccess.PCars
 
             private void ReadControlLightStates()
             {
-                this.carState.ControlLights = new ControlLightsState
+                this.telemetry.ControlLights = new ControlLightsState
                 {
                     DrivingAssists = new DrivingAssistsState
                     {

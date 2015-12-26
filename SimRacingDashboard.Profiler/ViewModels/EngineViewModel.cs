@@ -10,7 +10,7 @@ namespace SimRacingDashboard.Profiler.ViewModels
         public ushort MaxRpm { get; private set; }
         public float RpmLevel { get; private set; }
 
-        internal void Add(CarState data)
+        internal void Add(TelemetryDataSet data)
         {
             this.Rpm = Math.Min(data.Engine.Rpm, data.Engine.MaxRpm);
             this.MaxRpm = data.Engine.MaxRpm;

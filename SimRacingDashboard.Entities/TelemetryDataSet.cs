@@ -3,7 +3,7 @@
 namespace SimRacingDashboard.Entities
 {
     [Serializable]
-    public struct CarState
+    public struct TelemetryDataSet
     {
         public ushort Version { get; set; }
 

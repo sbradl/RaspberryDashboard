@@ -4,7 +4,7 @@ namespace SimRacingDashboard.Output
 {
     public interface ICarStateRenderer
     {
-        void Render(CarState carState);
+        void Render(TelemetryDataSet carState);
     }
 }
 

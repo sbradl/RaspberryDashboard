@@ -75,7 +75,7 @@ namespace SimRacingDashboard.Profiler.ViewModels
 
         //public TimingsViewModel Timings { get; private set; }
 
-        public void Add(CarState data)
+        public void Add(TelemetryDataSet data)
         {
             if(this.LastAddedLap == null)
             {

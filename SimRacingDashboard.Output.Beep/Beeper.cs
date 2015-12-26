@@ -5,10 +5,10 @@ namespace SimRacingDashboard.Output.Beep
 {
     public class Beeper : ICarStateRenderer
     {
-        private CarState? oldState = null;
-        private CarState newState;
+        private TelemetryDataSet? oldState = null;
+        private TelemetryDataSet newState;
 
-        public void Render(CarState carState)
+        public void Render(TelemetryDataSet carState)
         {
             if(this.oldState == null)
             {

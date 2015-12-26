@@ -6,7 +6,7 @@ namespace SimRacingDashboard.Profiler.ViewModels.Tires
 {
     class RideHeightViewModel : AbstractTireViewModel
     {
-        public RideHeightViewModel(IList<CarState> datasets)
+        public RideHeightViewModel(IList<TelemetryDataSet> datasets)
             : base(datasets)
         {
         }

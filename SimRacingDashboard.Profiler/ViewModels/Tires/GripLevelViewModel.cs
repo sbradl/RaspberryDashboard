@@ -6,7 +6,7 @@ namespace SimRacingDashboard.Profiler.ViewModels.Tires
 {
     class GripLevelViewModel : AbstractTireViewModel
     {
-        public GripLevelViewModel(IList<CarState> datasets)
+        public GripLevelViewModel(IList<TelemetryDataSet> datasets)
             : base(datasets)
         {
         }

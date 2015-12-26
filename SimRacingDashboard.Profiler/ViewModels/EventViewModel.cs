@@ -14,7 +14,7 @@ namespace SimRacingDashboard.Profiler.ViewModels
 
         public float TrackLength { get; private set; }
 
-        public void Add(CarState data)
+        public void Add(TelemetryDataSet data)
         {
             this.Laps = data.Event.LapsInEvent;
             RaisePropertyChanged(() => this.Laps);

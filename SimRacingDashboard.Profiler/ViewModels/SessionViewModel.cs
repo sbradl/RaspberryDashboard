@@ -41,7 +41,7 @@ namespace SimRacingDashboard.Profiler.ViewModels
             }
         }
 
-        public void Add(CarState data)
+        public void Add(TelemetryDataSet data)
         {
             this.SessionState = data.Session.State.ToString();
             this.Participants = data.Session.Participants;

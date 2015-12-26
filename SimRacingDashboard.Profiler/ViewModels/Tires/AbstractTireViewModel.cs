@@ -13,7 +13,7 @@ namespace SimRacingDashboard.Profiler.ViewModels.Tires
         private LineSeries rearLeft;
         private LineSeries rearRight;
         
-        public AbstractTireViewModel(IList<CarState> datasets)
+        public AbstractTireViewModel(IList<TelemetryDataSet> datasets)
             : base(datasets)
         {
             frontLeft = new LineSeries { Title = "Front Left", Color = OxyColors.LightBlue, TrackerFormatString = TrackerFormatString };
@@ -43,7 +43,7 @@ namespace SimRacingDashboard.Profiler.ViewModels.Tires
 
         protected abstract double GetValueFor(Tire tire);
 
-        private void Add(CarState data)
+        private void Add(TelemetryDataSet data)
         {
             Do(() =>
             {

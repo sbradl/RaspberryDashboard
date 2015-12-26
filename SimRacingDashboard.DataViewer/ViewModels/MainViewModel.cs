@@ -16,8 +16,8 @@ namespace SimRacingDashboard.DataViewer.ViewModels
 
         public MainViewModel()
         {
-            this.AvailableProperties = new ObservableCollection<string>(PrintProperties(typeof(CarState), string.Empty));
-            this.Datasets = new ObservableCollection<CarState>();
+            this.AvailableProperties = new ObservableCollection<string>(PrintProperties(typeof(TelemetryDataSet), string.Empty));
+            this.Datasets = new ObservableCollection<TelemetryDataSet>();
 
             BuildColumnConfig();
         }
@@ -38,11 +38,11 @@ namespace SimRacingDashboard.DataViewer.ViewModels
             }
         }
 
-        public ObservableCollection<CarState> Datasets { get; private set; }
+        public ObservableCollection<TelemetryDataSet> Datasets { get; private set; }
 
         public ColumnConfig ColumnConfig { get; set; }
 
-        public CarState SelectedDataset
+        public TelemetryDataSet SelectedDataset
         {
             get
             {
@@ -55,7 +55,7 @@ namespace SimRacingDashboard.DataViewer.ViewModels
             }
         }
         
-        internal void Add(CarState data)
+        internal void Add(TelemetryDataSet data)
         {
             this.Datasets.Add(data);
 

@@ -8,7 +8,7 @@ namespace SimRacingDashboard.Output.File
     {
         private BinaryFormatter formatter = new BinaryFormatter();
 
-        public void Render(CarState carState)
+        public void Render(TelemetryDataSet carState)
         {
             using (var stream = new FileStream("telemetry.bin", FileMode.Append, FileAccess.Write, FileShare.None))
             {

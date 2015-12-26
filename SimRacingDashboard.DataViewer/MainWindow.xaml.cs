@@ -8,19 +8,19 @@ namespace SimRacingDashboard.DataViewer
 {
     public partial class MainWindow : Window
     {
-        private ICarStateGateway gateway;
+        private ITelemetryGateway gateway;
         private MainViewModel viewModel;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            this.gateway = new DataAccess.PCars.CarStateGateway();
+            this.gateway = new DataAccess.PCars.TelemetryGateway();
 
             this.viewModel = new MainViewModel();
             this.DataContext = this.viewModel;
 
-            this.gateway.CarStateChanged += (sender, data) =>
+            this.gateway.TelemetryChanged += (sender, data) =>
             {
                 Dispatcher.Invoke(() => this.viewModel.Add(data));
             };

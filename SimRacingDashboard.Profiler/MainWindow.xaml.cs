@@ -7,17 +7,17 @@ namespace SimRacingDashboard.Profiler
 {
     public partial class MainWindow : Window
     {
-        private ICarStateGateway gateway;
+        private ITelemetryGateway gateway;
         
         public MainWindow()
         {
             InitializeComponent();
 
-            this.gateway = new DataAccess.PCars.CarStateGateway();
+            this.gateway = new DataAccess.PCars.TelemetryGateway();
             var viewModel = new MainViewModel();
             this.DataContext = viewModel;
 
-            this.gateway.CarStateChanged += (sender, data) =>
+            this.gateway.TelemetryChanged += (sender, data) =>
             {
                 Dispatcher.Invoke(() => viewModel.Add(data));
             };

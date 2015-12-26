@@ -39,7 +39,7 @@
     <Compile Include="TimingInfo.cs" />
     <Compile Include="Tire.cs" />
     <Compile Include="Tires.cs" />
-    <Compile Include="CarState.cs" />
+    <Compile Include="TelemetryDataSet.cs" />
     <Compile Include="TemperatureUnit.cs" />
     <Compile Include="PressureUnit.cs" />
     <Compile Include="Temperature.cs" />

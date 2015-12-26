@@ -10,7 +10,7 @@ namespace SimRacingDashboard.Profiler.ViewModels
     {
         public LapViewModel()
         {
-            this.Datasets = new ObservableCollection<CarState>();
+            this.Datasets = new ObservableCollection<TelemetryDataSet>();
         }
 
         public int Lap
@@ -31,7 +31,7 @@ namespace SimRacingDashboard.Profiler.ViewModels
             }
         }
 
-        public ObservableCollection<CarState> Datasets
+        public ObservableCollection<TelemetryDataSet> Datasets
         {
             get; private set;
         }
@@ -60,7 +60,7 @@ namespace SimRacingDashboard.Profiler.ViewModels
             RaisePropertyChanged(() => Pitted);
         }
 
-        public void Add(CarState state)
+        public void Add(TelemetryDataSet state)
         {
             this.Datasets.Add(state);
             this.Lap = state.CurrentLap;

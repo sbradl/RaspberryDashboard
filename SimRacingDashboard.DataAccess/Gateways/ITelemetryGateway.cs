@@ -3,9 +3,9 @@ using SimRacingDashboard.Entities;
 
 namespace SimRacingDashboard.DataAccess
 {
-    public interface ICarStateGateway
+    public interface ITelemetryGateway
     {
-        event EventHandler<CarState> CarStateChanged;
+        event EventHandler<TelemetryDataSet> TelemetryChanged;
 
         void StartReading();
 

@@ -31,7 +31,7 @@ namespace SimRacingDashboard
 
             foreach (var renderer in renderers)
             {
-                gateway.CarStateChanged += (sender, carState) => renderer.Render(carState);
+                gateway.TelemetryChanged += (sender, carState) => renderer.Render(carState);
             }
 
             gateway.StartReading();
@@ -42,9 +42,9 @@ namespace SimRacingDashboard
             gateway.Shutdown();
         }
 
-        private static ICarStateGateway CreateGateway(string backend)
+        private static ITelemetryGateway CreateGateway(string backend)
         {
-           return GetServiceInstanceFrom<ICarStateGateway>(backend);
+           return GetServiceInstanceFrom<ITelemetryGateway>(backend);
         }
 
         private static IEnumerable<ICarStateRenderer> CreateRenderers(string frontends)
