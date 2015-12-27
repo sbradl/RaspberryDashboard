@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimRacingDashboard.DataView
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimRacingDashboard.Output.Dashboard", "SimRacingDashboard.Output.Dashboard\SimRacingDashboard.Output.Dashboard.csproj", "{BB5F7132-B471-4788-80FC-29431118ED8C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimRacingDashboard.DataAccess.Udp", "SimRacingDashboard.DataAccess.Udp\SimRacingDashboard.DataAccess.Udp.csproj", "{B4178209-5EE2-46F4-901B-8F0D348D859E}"
+EndProject
 Global
 	GlobalSection(Performance) = preSolution
 		HasPerformanceSessions = true
@@ -78,6 +80,10 @@ Global
 		{BB5F7132-B471-4788-80FC-29431118ED8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB5F7132-B471-4788-80FC-29431118ED8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB5F7132-B471-4788-80FC-29431118ED8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4178209-5EE2-46F4-901B-8F0D348D859E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4178209-5EE2-46F4-901B-8F0D348D859E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4178209-5EE2-46F4-901B-8F0D348D859E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4178209-5EE2-46F4-901B-8F0D348D859E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

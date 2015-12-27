@@ -177,9 +177,9 @@ namespace SimRacingDashboard.DataAccess.PCars
                 Goto(464);
                 this.telemetry.Position = new[]
                 {
-                    this.reader.ReadInt16(),
-                    this.reader.ReadInt16(),
-                    this.reader.ReadInt16()
+                    (float)this.reader.ReadInt16(),
+                    (float)this.reader.ReadInt16(),
+                    (float)this.reader.ReadInt16()
                 };
 
                 this.telemetry.CurrentTrackDistance = this.reader.ReadUInt16();

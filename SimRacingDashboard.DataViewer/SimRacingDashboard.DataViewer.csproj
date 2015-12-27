@@ -125,6 +125,10 @@
       <Project>{9d15c050-5a6b-4cf7-9c9c-2cdada4df509}</Project>
       <Name>SimRacingDashboard.DataAccess.PCars</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SimRacingDashboard.DataAccess.Udp\SimRacingDashboard.DataAccess.Udp.csproj">
+      <Project>{b4178209-5ee2-46f4-901b-8f0d348d859e}</Project>
+      <Name>SimRacingDashboard.DataAccess.Udp</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SimRacingDashboard.DataAccess\SimRacingDashboard.DataAccess.csproj">
       <Project>{9c369ecb-309f-497f-9756-0ea67026ad3f}</Project>
       <Name>SimRacingDashboard.DataAccess</Name>

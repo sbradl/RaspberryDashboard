@@ -31,7 +31,7 @@ namespace SimRacingDashboard.Entities
 
         public ControlLightsState ControlLights { get; set; }
 
-        public short[] Position { get; set; }
+        public float[] Position { get; set; }
 
         public float CurrentTrackDistance { get; set; }
 

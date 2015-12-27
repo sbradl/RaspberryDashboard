@@ -31,10 +31,16 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Gateways\TelemetryGateway.cs" />
+    <Compile Include="PacketParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
+    <ProjectReference Include="..\SimRacingDashboard.DataAccess.Udp\SimRacingDashboard.DataAccess.Udp.csproj">
+      <Project>{b4178209-5ee2-46f4-901b-8f0d348d859e}</Project>
+      <Name>SimRacingDashboard.DataAccess.Udp</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SimRacingDashboard.DataAccess\SimRacingDashboard.DataAccess.csproj">
       <Project>{9C369ECB-309F-497F-9756-0EA67026AD3F}</Project>
       <Name>SimRacingDashboard.DataAccess</Name>
