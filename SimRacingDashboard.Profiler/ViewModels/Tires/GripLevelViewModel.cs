@@ -1,12 +1,12 @@
 ﻿using OxyPlot.Axes;
 using SimRacingDashboard.Entities;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace SimRacingDashboard.Profiler.ViewModels.Tires
 {
     class GripLevelViewModel : AbstractTireViewModel
     {
-        public GripLevelViewModel(IList<TelemetryDataSet> datasets)
+        public GripLevelViewModel(ObservableCollection<TelemetryDataSet> datasets)
             : base(datasets)
         {
         }
@@ -16,6 +16,14 @@ namespace SimRacingDashboard.Profiler.ViewModels.Tires
             get
             {
                 return "{0}\nLapTime: {2:F3}s\nGrip-Level: {4:F0}%";
+            }
+        }
+
+        protected override string Title
+        {
+            get
+            {
+                return "Grip-Level";
             }
         }
 

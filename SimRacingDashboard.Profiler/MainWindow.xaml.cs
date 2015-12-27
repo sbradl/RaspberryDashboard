@@ -13,7 +13,10 @@ namespace SimRacingDashboard.Profiler
         {
             InitializeComponent();
 
-            this.gateway = new DataAccess.PCars.TelemetryGateway();
+            this.WindowState = WindowState.Maximized;
+
+            //this.gateway = new DataAccess.PCars.TelemetryGateway();
+            this.gateway = new DataAccess.DirtRally.Gateways.TelemetryGateway();
             var viewModel = new MainViewModel();
             this.DataContext = viewModel;
 

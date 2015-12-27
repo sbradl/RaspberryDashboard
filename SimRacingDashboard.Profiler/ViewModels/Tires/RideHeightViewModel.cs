@@ -1,12 +1,13 @@
 ﻿using OxyPlot.Axes;
 using SimRacingDashboard.Entities;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System;
 
 namespace SimRacingDashboard.Profiler.ViewModels.Tires
 {
     class RideHeightViewModel : AbstractTireViewModel
     {
-        public RideHeightViewModel(IList<TelemetryDataSet> datasets)
+        public RideHeightViewModel(ObservableCollection<TelemetryDataSet> datasets)
             : base(datasets)
         {
         }
@@ -16,6 +17,14 @@ namespace SimRacingDashboard.Profiler.ViewModels.Tires
             get
             {
                 return "{0}\nLapTime: {2:F3}s\nHeight: {4:F1}mm";
+            }
+        }
+
+        protected override string Title
+        {
+            get
+            {
+                return "Ride height";
             }
         }
 

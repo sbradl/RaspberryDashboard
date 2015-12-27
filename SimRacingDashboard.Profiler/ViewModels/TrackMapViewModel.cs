@@ -2,31 +2,29 @@
 using OxyPlot.Annotations;
 using OxyPlot.Series;
 using SimRacingDashboard.Entities;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System;
 
 namespace SimRacingDashboard.Profiler.ViewModels
 {
     class TrackMapViewModel : AbstractViewModelWithPlot
     {
         private LineSeries position = new LineSeries { Color = OxyColors.Black };
-
-        //private LapViewModel lap;
+        
         private EllipseAnnotation annotation = new EllipseAnnotation { Width = 25, Height = 25, Stroke = OxyColors.Red, StrokeThickness = 2, Fill = OxyColors.Transparent };
 
-        public TrackMapViewModel(IEnumerable<TelemetryDataSet> datasets)
+        protected override string Title
         {
-            this.DataPlot.PlotType = PlotType.Cartesian;
-            this.DataPlot.Series.Add(this.position);
-            DataPlot.Annotations.Add(this.annotation);
-
-            foreach (var data in datasets)
+            get
             {
-                this.position.Points.Add(new DataPoint(data.Position[0], data.Position[2]));
+                return "Trackmap";
             }
+        }
 
-            this.position.Points.Add(this.position.Points.First());
-
+        public TrackMapViewModel(ObservableCollection<TelemetryDataSet> datasets)
+            : base(datasets)
+        {
             SelectedDatasetChanged += (sender, datasetIndex) =>
             {
                 var selectedDataset = datasets.Skip(datasetIndex - 1).Take(1).Single();
@@ -36,28 +34,16 @@ namespace SimRacingDashboard.Profiler.ViewModels
             };
         }
 
-        //public TrackMapViewModel(LapViewModel lap)
-        //{
-        //    this.lap = lap;
-        //    this.DataPlot.Series.Add(this.position);
+        protected override void InitializeDataSeries()
+        {
+            this.DataPlot.PlotType = PlotType.Cartesian;
+            this.DataPlot.Series.Add(this.position);
+            DataPlot.Annotations.Add(this.annotation);
+        }
 
-        //    foreach (var data in lap.Datasets)
-        //    {
-        //        this.position.Points.Add(new DataPoint(data.Position[0], data.Position[2]));
-        //    }
-
-        //    lap.Datasets.CollectionChanged += Datasets_CollectionChanged;
-        //}
-
-        //private void Datasets_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        //{
-        //    Do(() =>
-        //    {
-        //        foreach (CarState data in e.NewItems)
-        //        {
-        //            this.position.Points.Add(new DataPoint(data.Position[0], data.Position[2]));
-        //        }
-        //    });
-        //}
+        protected override void Render(TelemetryDataSet data)
+        {
+            this.position.Points.Add(new DataPoint(data.Position[0], data.Position[2]));
+        }
     }
 }

@@ -21,10 +21,7 @@ namespace SimRacingDashboard.DataAccess.DirtRally
         {
             private BinaryReader reader;
 
-            private TelemetryDataSet telemetry = new TelemetryDataSet
-            {
-                DateTime = DateTime.Now
-            };
+            private TelemetryDataSet telemetry = new TelemetryDataSet();
 
             public Helper(BinaryReader reader)
             {
@@ -35,6 +32,12 @@ namespace SimRacingDashboard.DataAccess.DirtRally
             {
                 var eventTime = this.reader.ReadSingle();
                 var currentLapTime = this.reader.ReadSingle();
+
+                if(currentLapTime == 0)
+                {
+                    return null;
+                }
+
                 var distanceOnCurrentLap = this.reader.ReadSingle();
                 var totalDistance = this.reader.ReadSingle(); // fraction of completion (0 to 1)
                 
@@ -162,8 +165,6 @@ namespace SimRacingDashboard.DataAccess.DirtRally
                 {
                     CurrentGear = (byte)gear
                 };
-
-                Console.WriteLine("{0}", trackLength);
 
                 this.telemetry.Position = position;
 

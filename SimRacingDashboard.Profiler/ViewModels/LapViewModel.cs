@@ -68,7 +68,7 @@ namespace SimRacingDashboard.Profiler.ViewModels
 
             //RaisePropertyChanged(() => LatestTrackDistance);
             //RaisePropertyChanged(() => Lap);
-            //RaisePropertyChanged(() => LapTime);
+            RaisePropertyChanged(() => LapTime);
             //RaisePropertyChanged(() => Pitted);
         }
     }

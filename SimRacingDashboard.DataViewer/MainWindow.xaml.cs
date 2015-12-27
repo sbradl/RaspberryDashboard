@@ -15,7 +15,7 @@ namespace SimRacingDashboard.DataViewer
         {
             InitializeComponent();
 
-            this.gateway = new DataAccess.PCars.TelemetryGateway();
+            this.gateway = new DataAccess.PCars.Gateways.TelemetryGateway();
 
             this.viewModel = new MainViewModel();
             this.DataContext = this.viewModel;

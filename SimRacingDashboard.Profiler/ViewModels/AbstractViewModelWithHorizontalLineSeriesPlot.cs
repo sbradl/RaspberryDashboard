@@ -2,7 +2,7 @@
 using OxyPlot.Annotations;
 using OxyPlot.Axes;
 using SimRacingDashboard.Entities;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace SimRacingDashboard.Profiler.ViewModels
 {
@@ -11,13 +11,10 @@ namespace SimRacingDashboard.Profiler.ViewModels
         private LineAnnotation verticalLine = new LineAnnotation { Type = LineAnnotationType.Vertical, Color = OxyColors.Red };
 
         private Axis xAxis = new LinearAxis { Unit = "s", Position = AxisPosition.Bottom, IsZoomEnabled = true };
-
-        private IList<TelemetryDataSet> datasets;
-
-        public AbstractViewModelWithHorizontalLineSeriesPlot(IList<TelemetryDataSet> datasets)
+        
+        public AbstractViewModelWithHorizontalLineSeriesPlot(ObservableCollection<TelemetryDataSet> datasets)
+            : base(datasets)
         {
-            this.datasets = datasets;
-
             DataPlot.Annotations.Add(this.verticalLine);
             DataPlot.Axes.Add(this.xAxis);
             DataPlot.LegendPlacement = LegendPlacement.Inside;
@@ -25,7 +22,7 @@ namespace SimRacingDashboard.Profiler.ViewModels
 
             SelectedDatasetChanged += (sender, datasetIndex) =>
             {
-                var selectedDataset = this.datasets[datasetIndex];
+                var selectedDataset = datasets[datasetIndex];
                 this.verticalLine.X = selectedDataset.Timings.CurrentLapTime.TotalSeconds;
             };
         }

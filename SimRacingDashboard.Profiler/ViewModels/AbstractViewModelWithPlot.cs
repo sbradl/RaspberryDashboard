@@ -1,6 +1,8 @@
 ﻿using GalaSoft.MvvmLight;
 using OxyPlot;
+using SimRacingDashboard.Entities;
 using System;
+using System.Collections.ObjectModel;
 using System.Threading;
 
 namespace SimRacingDashboard.Profiler.ViewModels
@@ -13,19 +15,54 @@ namespace SimRacingDashboard.Profiler.ViewModels
 
         protected static EventHandler<int> SelectedDatasetChanged;
         
-        protected AbstractViewModelWithPlot()
+        protected AbstractViewModelWithPlot(ObservableCollection<TelemetryDataSet> datasets)
         {
-            this.DataPlot = new PlotModel();
+            this.DataPlot = new PlotModel
+            {
+                Title = Title
+            };
 
             this.DataPlot.MouseDown += OnDataPlotClicked;
 
             this.timer = new Timer(OnTimerElapsed);
             this.timer.Change(0, RenderUpdatePeriodInMs);
+
+            InitializeDataSeries();
+
+            Do(() =>
+            {
+                foreach (var data in datasets)
+                {
+                    Render(data);
+                }
+            });
+
+            datasets.CollectionChanged += Datasets_CollectionChanged;
         }
 
         public PlotModel DataPlot { get; private set; }
 
-        protected void Do(Action action)
+        protected abstract string Title
+        {
+            get;
+        }
+
+        private void Datasets_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            Do(() =>
+            {
+                foreach (TelemetryDataSet data in e.NewItems)
+                {
+                    Render(data);
+                }
+            });
+        }
+
+        protected abstract void Render(TelemetryDataSet data);
+
+        protected abstract void InitializeDataSeries();
+
+        private void Do(Action action)
         {
             lock (this.DataPlot.SyncRoot)
             {

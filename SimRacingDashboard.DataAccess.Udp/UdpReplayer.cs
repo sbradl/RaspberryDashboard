@@ -26,7 +26,7 @@ namespace SimRacingDashboard.DataAccess.Udp
                 }
             }
 
-           // this.datasets = this.datasets.Take(3600).ToList();
+           this.datasets = this.datasets.Skip(2000).ToList();
         }
 
         public byte[] ReadData()
@@ -41,7 +41,7 @@ namespace SimRacingDashboard.DataAccess.Udp
                 return this.datasets[this.current];
             }
 
-            //Thread.Sleep(10);
+            //Thread.Sleep(1);
 
             return this.datasets[this.current++];
         }

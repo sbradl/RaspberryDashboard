@@ -1,7 +1,7 @@
 ﻿using SimRacingDashboard.DataAccess.Udp;
 using SimRacingDashboard.Entities;
 
-namespace SimRacingDashboard.DataAccess.PCars
+namespace SimRacingDashboard.DataAccess.PCars.Gateways
 {
     public class TelemetryGateway : AbstractTelemetryGateway
     {

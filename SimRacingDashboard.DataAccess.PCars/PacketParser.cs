@@ -23,10 +23,7 @@ namespace SimRacingDashboard.DataAccess.PCars
 
             private CarFlags carFlags;
 
-            private TelemetryDataSet telemetry = new TelemetryDataSet
-            {
-                DateTime = DateTime.Now
-            };
+            private TelemetryDataSet telemetry = new TelemetryDataSet();
 
             public Helper(BinaryReader reader)
             {

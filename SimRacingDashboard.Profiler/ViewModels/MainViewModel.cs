@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using SimRacingDashboard.Entities;
+using SimRacingDashboard.Profiler.ViewModels.Engine;
 using SimRacingDashboard.Profiler.ViewModels.Tires;
 using System.Collections.ObjectModel;
 
@@ -65,9 +66,11 @@ namespace SimRacingDashboard.Profiler.ViewModels
 
         //public EventViewModel Event { get; private set; }
 
-        //public SpeedViewModel Speed { get; private set; }
+        public SpeedViewModel Speed { get; private set; }
 
-        //public EngineViewModel Engine { get; private set; }
+        public RpmViewModel Rpm { get; private set; }
+
+        public TorqueViewModel Torque { get; private set; }
 
         //public ControlLightsViewModel ControlLights { get; private set; }
 
@@ -111,20 +114,19 @@ namespace SimRacingDashboard.Profiler.ViewModels
 
         private void BuildViewModelsForSelectedLap()
         {
-            //if (this.SelectedLap.IsFinished)
-            //{
-                this.TrackMap = new TrackMapViewModel(this.SelectedLap.Datasets);
-                this.RideHeight = new RideHeightViewModel(this.SelectedLap.Datasets);
-                this.GripLevel = new GripLevelViewModel(this.SelectedLap.Datasets);
-            //}
-            //else
-            //{
-            //    this.TrackMap = new TrackMapViewModel(this.SelectedLap);
-            //}
+            this.TrackMap = new TrackMapViewModel(this.SelectedLap.Datasets);
+            this.RideHeight = new RideHeightViewModel(this.SelectedLap.Datasets);
+            this.GripLevel = new GripLevelViewModel(this.SelectedLap.Datasets);
+            this.Rpm = new RpmViewModel(this.SelectedLap.Datasets);
+            this.Torque = new TorqueViewModel(this.SelectedLap.Datasets);
+            this.Speed = new SpeedViewModel(this.SelectedLap.Datasets);
 
             RaisePropertyChanged(() => TrackMap);
             RaisePropertyChanged(() => RideHeight);
             RaisePropertyChanged(() => GripLevel);
+            RaisePropertyChanged(() => Rpm);
+            RaisePropertyChanged(() => Torque);
+            RaisePropertyChanged(() => Speed);
         }
     }
 }

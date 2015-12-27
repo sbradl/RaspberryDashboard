@@ -7,8 +7,6 @@ namespace SimRacingDashboard.Entities
     {
         public ushort Version { get; set; }
 
-        public DateTime DateTime { get; set; }
-
         public SessionInfo Session { get; set; }
 
         public EventState Event { get; set; }

@@ -87,19 +87,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModels\Engine\RpmViewModel.cs" />
+    <Compile Include="ViewModels\Engine\SpeedViewModel.cs" />
+    <Compile Include="ViewModels\Engine\TorqueViewModel.cs" />
     <Compile Include="ViewModels\Tires\AbstractTireViewModel.cs" />
     <Compile Include="ViewModels\AbstractViewModelWithHorizontalLineSeriesPlot.cs" />
     <Compile Include="ViewModels\AbstractViewModelWithPlot.cs" />
     <Compile Include="ViewModels\ControlLightsViewModel.cs" />
-    <Compile Include="ViewModels\EngineViewModel.cs" />
     <Compile Include="ViewModels\EventViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\Tires\GripLevelViewModel.cs" />
     <Compile Include="ViewModels\Tires\RideHeightViewModel.cs" />
     <Compile Include="ViewModels\LapViewModel.cs" />
     <Compile Include="ViewModels\SessionViewModel.cs" />
-    <Compile Include="ViewModels\SpeedViewModel.cs" />
-    <Compile Include="ViewModels\TimingsViewModel.cs" />
     <Compile Include="ViewModels\TrackMapViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -143,6 +143,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SimRacingDashboard.DataAccess.DirtRally\SimRacingDashboard.DataAccess.DirtRally.csproj">
+      <Project>{df572ff5-1cb8-4bf4-9b88-a52c28673302}</Project>
+      <Name>SimRacingDashboard.DataAccess.DirtRally</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SimRacingDashboard.DataAccess.PCars\SimRacingDashboard.DataAccess.PCars.csproj">
       <Project>{9d15c050-5a6b-4cf7-9c9c-2cdada4df509}</Project>
       <Name>SimRacingDashboard.DataAccess.PCars</Name>
