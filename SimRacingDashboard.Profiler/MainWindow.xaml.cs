@@ -1,6 +1,8 @@
 ﻿using SimRacingDashboard.DataAccess;
 using SimRacingDashboard.Profiler.ViewModels;
+using System;
 using System.ComponentModel;
+using System.IO;
 using System.Windows;
 
 namespace SimRacingDashboard.Profiler
@@ -11,21 +13,27 @@ namespace SimRacingDashboard.Profiler
         
         public MainWindow()
         {
+            AppDomain.CurrentDomain.UnhandledException += HandleException;
+
             InitializeComponent();
 
             this.WindowState = WindowState.Maximized;
 
-            //this.gateway = new DataAccess.PCars.TelemetryGateway();
-            this.gateway = new DataAccess.DirtRally.Gateways.TelemetryGateway();
-            var viewModel = new MainViewModel();
+            this.gateway = GatewayFactory.CreateGateway();
+            var viewModel = new MainViewModel(this.gateway);
             this.DataContext = viewModel;
 
             this.gateway.TelemetryChanged += (sender, data) =>
             {
                 Dispatcher.Invoke(() => viewModel.Add(data));
             };
+        }
 
-            this.gateway.StartReading();
+        private void HandleException(object sender, UnhandledExceptionEventArgs e)
+        {
+            var message = string.Format("{1}{0}{0}{2}{0}{0}", Environment.NewLine, DateTime.Now, e.ExceptionObject.ToString());
+            File.AppendAllText("error.log", message);
+            MessageBox.Show(message);
         }
 
         protected override void OnClosing(CancelEventArgs args)

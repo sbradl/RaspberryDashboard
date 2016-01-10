@@ -2,6 +2,7 @@
 
 namespace SimRacingDashboard.Entities
 {
+    [Serializable]
     public struct EventState
     {
         public byte LapsInEvent { get; set; }

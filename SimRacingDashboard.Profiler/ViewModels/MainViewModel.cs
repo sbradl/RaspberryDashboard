@@ -1,28 +1,75 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using SimRacingDashboard.DataAccess;
 using SimRacingDashboard.Entities;
 using SimRacingDashboard.Profiler.ViewModels.Engine;
 using SimRacingDashboard.Profiler.ViewModels.Tires;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace SimRacingDashboard.Profiler.ViewModels
 {
     class MainViewModel : ViewModelBase
     {
+        private ITelemetryGateway gateway;
+
         private LapViewModel selectedLap;
+        private IOViewModel io = new IOViewModel();
+
         private bool autoScroll = false;
 
-        public MainViewModel()
+        private IList<TelemetryDataSet> allDataSets = new List<TelemetryDataSet>();
+        private bool isDirty;
+        private bool isRecording;
+
+        public MainViewModel(ITelemetryGateway gateway)
         {
+            this.gateway = gateway;
             this.Laps = new ObservableCollection<LapViewModel>();
 
             this.ToggleAutoScrollCommand = new RelayCommand(() =>
             {
                 this.autoScroll = !this.autoScroll;
             });
+
+            this.OpenCommand = new RelayCommand(Open);
+            this.SaveCommand = new RelayCommand(Save, CanSave);
+            this.SaveAsCommand = new RelayCommand(SaveAs);
         }
 
         public RelayCommand ToggleAutoScrollCommand { get; private set; }
+
+        public RelayCommand OpenCommand { get; private set; }
+
+        public RelayCommand SaveCommand { get; private set; }
+        public RelayCommand SaveAsCommand { get; private set; }
+
+        public bool IsRecording
+        {
+            get
+            {
+                return this.isRecording;
+            }
+
+            set
+            {
+                if(this.isRecording != value)
+                {
+                    this.isRecording = value;
+
+                    if(this.IsRecording)
+                    {
+                        this.gateway.StartReading();
+                    }
+                    else
+                    {
+                        this.gateway.Shutdown();
+                    }
+
+                    RaisePropertyChanged(() => IsRecording);
+                }
+            }
+        }
 
         public ObservableCollection<LapViewModel> Laps { get; private set; }
 
@@ -97,7 +144,20 @@ namespace SimRacingDashboard.Profiler.ViewModels
                 }
             }
 
+            this.isDirty = true;
+            this.allDataSets.Add(data);
             this.LastAddedLap.Add(data);
+        }
+
+        private void Close()
+        {
+            this.Laps.Clear();
+            this.LastAddedLap = null;
+            this.SelectedLap = null;
+            this.allDataSets.Clear();
+            this.isDirty = false;
+
+            BuildViewModelsForSelectedLap();
         }
 
         private void StartNewLap()
@@ -114,12 +174,24 @@ namespace SimRacingDashboard.Profiler.ViewModels
 
         private void BuildViewModelsForSelectedLap()
         {
-            this.TrackMap = new TrackMapViewModel(this.SelectedLap.Datasets);
-            this.RideHeight = new RideHeightViewModel(this.SelectedLap.Datasets);
-            this.GripLevel = new GripLevelViewModel(this.SelectedLap.Datasets);
-            this.Rpm = new RpmViewModel(this.SelectedLap.Datasets);
-            this.Torque = new TorqueViewModel(this.SelectedLap.Datasets);
-            this.Speed = new SpeedViewModel(this.SelectedLap.Datasets);
+            if (this.SelectedLap == null)
+            {
+                this.TrackMap = null;
+                this.RideHeight = null;
+                this.GripLevel = null;
+                this.Rpm = null;
+                this.Torque = null;
+                this.Speed = null;
+            }
+            else
+            {
+                this.TrackMap = new TrackMapViewModel(this.SelectedLap.Datasets);
+                this.RideHeight = new RideHeightViewModel(this.SelectedLap.Datasets);
+                this.GripLevel = new GripLevelViewModel(this.SelectedLap.Datasets);
+                this.Rpm = new RpmViewModel(this.SelectedLap.Datasets);
+                this.Torque = new TorqueViewModel(this.SelectedLap.Datasets);
+                this.Speed = new SpeedViewModel(this.SelectedLap.Datasets);
+            }
 
             RaisePropertyChanged(() => TrackMap);
             RaisePropertyChanged(() => RideHeight);
@@ -127,6 +199,38 @@ namespace SimRacingDashboard.Profiler.ViewModels
             RaisePropertyChanged(() => Rpm);
             RaisePropertyChanged(() => Torque);
             RaisePropertyChanged(() => Speed);
+        }
+
+        private void Open()
+        {
+            var datasets = this.io.Open();
+
+            if(datasets == null)
+            {
+                return;
+            }
+
+            Close();
+
+            foreach (var dataset in datasets)
+            {
+                Add(dataset);
+            }
+        }
+
+        private void Save()
+        {
+            this.isDirty = !this.io.Save(this.allDataSets);
+        }
+
+        private bool CanSave()
+        {
+            return true; // this.isDirty;
+        }
+
+        private void SaveAs()
+        {
+            this.isDirty = !this.io.SaveAs(this.allDataSets);
         }
     }
 }

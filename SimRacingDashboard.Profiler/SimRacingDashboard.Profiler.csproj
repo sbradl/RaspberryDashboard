@@ -64,6 +64,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.2.0.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
@@ -87,9 +88,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="GatewayFactory.cs" />
+    <Compile Include="Interactors\IO\OpenInteractor.cs" />
+    <Compile Include="Interactors\IO\SaveInteractor.cs" />
     <Compile Include="ViewModels\Engine\RpmViewModel.cs" />
     <Compile Include="ViewModels\Engine\SpeedViewModel.cs" />
     <Compile Include="ViewModels\Engine\TorqueViewModel.cs" />
+    <Compile Include="ViewModels\IOViewModel.cs" />
     <Compile Include="ViewModels\Tires\AbstractTireViewModel.cs" />
     <Compile Include="ViewModels\AbstractViewModelWithHorizontalLineSeriesPlot.cs" />
     <Compile Include="ViewModels\AbstractViewModelWithPlot.cs" />
@@ -167,6 +172,27 @@
       <Project>{72a3fbe6-d192-45d4-bae1-161f19fbc236}</Project>
       <Name>SimRacingDashboard.Output</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Save_6530.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\folder_Open_16xMD.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\folder_Open_16xLG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\refresh_16xLG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\SaveFileDialogControl_703.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\StatusAnnotations_Play_16xLG_color.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\StatusAnnotations_Pause_16xLG_color.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

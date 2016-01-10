@@ -9,7 +9,41 @@
         Title="MainWindow" WindowStartupLocation="CenterScreen">
     <DockPanel>
         <ToolBar DockPanel.Dock="Top">
-            <MenuItem Header="AutoScroll" Command="{Binding ToggleAutoScrollCommand}"></MenuItem>
+            <MenuItem Width="24" Command="{Binding OpenCommand}" ToolTip="Open">
+                <MenuItem.Icon>
+                    <Image Source="Images/folder_Open_16xLG.png"/>
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Width="24" Command="{Binding SaveCommand}" ToolTip="Save">
+                <MenuItem.Icon>
+                    <Image Source="Images/Save_6530.png"/>
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Width="24" Command="{Binding SaveAsCommand}" ToolTip="Save As">
+                <MenuItem.Icon>
+                    <Image Source="Images/SaveFileDialogControl_703.png"/>
+                </MenuItem.Icon>
+            </MenuItem>
+            <Separator></Separator>
+            <ToggleButton IsChecked="{Binding IsRecording}">
+                <Image Width="16" Height="16"  >
+                    <Image.Style>
+                        <Style TargetType="{x:Type Image}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsRecording}" Value="true">
+                                    <Setter Property="Source" Value="Images/StatusAnnotations_Pause_16xLG_color.png"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsRecording}" Value="false">
+                                    <Setter Property="Source" Value="Images/StatusAnnotations_Play_16xLG_color.png"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
+            </ToggleButton>
+            <ToggleButton Command="{Binding ToggleAutoScrollCommand}" Width="24">
+                 <Image Source="Images/refresh_16xLG.png" Width="16" />
+            </ToggleButton>
         </ToolBar>
         <ListView ItemsSource="{Binding Laps}" DockPanel.Dock="Left" SelectedItem="{Binding SelectedLap}" MinWidth="150">
             <ListView.View>

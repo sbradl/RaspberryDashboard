@@ -2,6 +2,7 @@
 
 namespace SimRacingDashboard.Entities
 {
+    [Serializable]
     public struct TimingInfo
     {
         public TimeSpan BestLapTime { get; set; }

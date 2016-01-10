@@ -9,12 +9,15 @@ namespace SimRacingDashboard.DataAccess.Udp
     {
         public event EventHandler<TelemetryDataSet> TelemetryChanged;
 
-        private volatile bool isRunning = true;
+        private volatile bool isRunning;
 
         private Thread worker;
 
         private UdpReader udpClient;
-        //private UdpReplayer udpClient = new UdpReplayer();
+       // private UdpReplayer udpClient;
+
+        private int port;
+        private IPAddress ip;
 
         protected AbstractTelemetryGateway(int udpPort)
             : this(udpPort, IPAddress.Any)
@@ -23,21 +26,36 @@ namespace SimRacingDashboard.DataAccess.Udp
 
         protected AbstractTelemetryGateway(int udpPort, IPAddress ip)
         {
-            this.udpClient = new UdpReader(udpPort, ip);
-
-            this.worker = new Thread(ReadData);
+            this.port = udpPort;
+            this.ip = ip;
         }
 
         public void StartReading()
         {
+            this.udpClient = new UdpReader(this.port, this.ip);
+            // this.udpClient = new UdpReplayer();
+            this.worker = new Thread(ReadData);
             this.worker.Start();
+            this.isRunning = true;
         }
 
         public void Shutdown()
         {
+            if(!this.isRunning)
+            {
+                return;
+            }
+
             this.isRunning = false;
 
-            this.udpClient.Dispose();
+            try
+            {
+                this.udpClient.Dispose();
+            }
+            catch (ObjectDisposedException)
+            {
+
+            }
 
             if (!this.worker.Join(TimeSpan.FromSeconds(1)))
             {

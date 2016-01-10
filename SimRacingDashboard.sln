@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimRacingDashboard.Output.D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimRacingDashboard.DataAccess.Udp", "SimRacingDashboard.DataAccess.Udp\SimRacingDashboard.DataAccess.Udp.csproj", "{B4178209-5EE2-46F4-901B-8F0D348D859E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpiTest", "SpiTest\SpiTest.csproj", "{C9A11E56-197F-4EAD-BF2A-A7642B27EEE2}"
+EndProject
 Global
 	GlobalSection(Performance) = preSolution
 		HasPerformanceSessions = true
@@ -84,6 +86,10 @@ Global
 		{B4178209-5EE2-46F4-901B-8F0D348D859E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4178209-5EE2-46F4-901B-8F0D348D859E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4178209-5EE2-46F4-901B-8F0D348D859E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9A11E56-197F-4EAD-BF2A-A7642B27EEE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9A11E56-197F-4EAD-BF2A-A7642B27EEE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9A11E56-197F-4EAD-BF2A-A7642B27EEE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9A11E56-197F-4EAD-BF2A-A7642B27EEE2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

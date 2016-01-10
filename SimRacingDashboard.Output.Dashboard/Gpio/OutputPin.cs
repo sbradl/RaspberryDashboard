@@ -1,6 +1,6 @@
 ﻿namespace SimRacingDashboard.Output.Dashboard.Gpio
 {
-    class OutputPin : AbstractPin
+    public class OutputPin : AbstractPin
     {
         public OutputPin(int pinNumber)
             : base(pinNumber)

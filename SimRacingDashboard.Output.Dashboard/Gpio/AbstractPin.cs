@@ -3,7 +3,7 @@ using System.IO;
 
 namespace SimRacingDashboard.Output.Dashboard.Gpio
 {
-    abstract class AbstractPin : IDisposable
+    public abstract class AbstractPin : IDisposable
     {
         private const string BasePath = "/sys/class/gpio";
         private const string ExportPath = BasePath + "/export";
